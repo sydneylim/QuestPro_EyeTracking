@@ -21,7 +21,8 @@ public class Calibration : MonoBehaviour
     void Start()
     {
         StartCalibration();
-        currentObject.SetActive(false);
+        grid.SetActive(false);
+        edges.SetActive(true); 
         StartCoroutine(calibration());
     }
 

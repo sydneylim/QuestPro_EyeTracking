@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Oculus;
+using UnityEngine.XR;
 
 public class Calibration : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class Calibration : MonoBehaviour
     private List<Transform> gridTransforms = new List<Transform>();
     private Transform end = null;
 
+    OVREyeGaze eyeGaze;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +32,27 @@ public class Calibration : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        // Check if eye tracking is supported and enabled
+        if (OVRManager.isHmdPresent && OVRManager.instance.isEyeTrackingEnabled)
+        {
+            // Get eye positions and rotations using other available components
+            Vector3 eyePositionLeft = OVRManager.display.GetEyeRenderViewport(OVRPlugin.Eye.Left).position;
+            Quaternion eyeRotationLeft = OVRManager.display.GetEyeRenderViewport(OVRPlugin.Eye.Left).rotation;
+
+            Vector3 eyePositionRight = OVRManager.display.GetEyeRenderViewport(OVRPlugin.Eye.Right).position;
+            Quaternion eyeRotationRight = OVRManager.display.GetEyeRenderViewport(OVRPlugin.Eye.Right).rotation;
+
+            // Use eye tracking data as desired
+            // For example, you can use eye positions and rotations for gaze-based interactions or other features
+
+            // Print the eye positions in the console
+            Debug.Log("Left Eye Position: " + eyePositionLeft);
+            Debug.Log("Right Eye Position: " + eyePositionRight);
+        }
+        else
+        {
+            Debug.Log("Eye tracking is not supported or enabled.");
+        }
     }
 
     public void StartCalibration()

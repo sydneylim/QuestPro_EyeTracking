@@ -17,8 +17,6 @@ public class Calibration : MonoBehaviour
     private List<Transform> gridTransforms = new List<Transform>();
     private Transform end = null;
 
-    OVREyeGaze eyeGaze;
-
     // Start is called before the first frame update
     void Start()
     {

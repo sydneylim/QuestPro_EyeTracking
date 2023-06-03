@@ -25,10 +25,34 @@ public class EyeGazeController : MonoBehaviour
             arrow.transform.position = eyeGaze.transform.position;
 
             debugText.GetComponent<TextMesh>().text = "Eye Tracking Enabled";
-            string rotation = eyeGaze.transform.rotation.ToString();
-            string position = eyeGaze.transform.position.ToString();
+            string name = eyeGaze.transform.name;
+            string worldRot = eyeGaze.transform.rotation.ToString();
+            string worldPos = eyeGaze.transform.position.ToString();
+            string eulerAngles = eyeGaze.transform.eulerAngles.ToString();
 
-            debugText.GetComponent<TextMesh>().text = "rot: " + rotation + "\n" + "pos: " + position + "\n" + eyeGaze.TrackingMode + "\n" + eyeGaze.Confidence + "\n" + eyeGaze.ConfidenceThreshold + "\n" + eyeGaze.ReferenceFrame;
+            // string locRot = (eyeGaze.transform.rotation * transform.worldToLocalMatrix).ToString();
+            // string locPos = eyeGaze.localPosition.ToString();
+            // string locEulerAngles = eyeGaze.transform.localEulerAngles.ToString();
+
+            string forward = eyeGaze.transform.forward.ToString();
+            string right = eyeGaze.transform.right.ToString();
+            string up = eyeGaze.transform.up.ToString();
+            string trackingMode = eyeGaze.TrackingMode.ToString();
+            string confidence = eyeGaze.Confidence.ToString();
+
+
+            debugText.GetComponent<TextMesh>().text = "Name: " + name + "\n" +
+                                                    "WorldRot: " + worldRot + "\n" + 
+                                                    "WorldPos: " + worldPos + "\n" + 
+                                                    "EulerAngles: " + eulerAngles + "\n" + 
+                                                    // "LocRot: " + locRot + "\n" + 
+                                                    // "LocPos: " + locPos + "\n" +
+                                                    // "LocEulerAngles: " + locEulerAngles + "\n" + 
+                                                    "ForwardVec: " + forward + "\n" + 
+                                                    "RightVec: " + right + "\n" + 
+                                                    "UpVec: " + up + "\n" + 
+                                                    "TrackingMode: " + trackingMode + "\n" + 
+                                                    "Confidence: " + confidence;
         }
     }
 }

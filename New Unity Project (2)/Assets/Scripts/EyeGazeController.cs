@@ -15,7 +15,7 @@ public class EyeGazeController : MonoBehaviour
 
     void Update()
     {
-          if (eyeGaze == null) {
+        if (eyeGaze == null) {
             debugText.GetComponent<TextMesh>().text = "Gaze Not Detected";
             return;
         }

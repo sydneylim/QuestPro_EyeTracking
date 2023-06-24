@@ -1409,7 +1409,7 @@ MonoBehaviour:
   ApplyPosition: 1
   ApplyRotation: 1
   ReferenceFrame: {fileID: 1961759986}
-  TrackingMode: 1
+  TrackingMode: 2
 --- !u!1 &1628148083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,7 +1964,7 @@ MonoBehaviour:
   ApplyPosition: 1
   ApplyRotation: 1
   ReferenceFrame: {fileID: 1961759986}
-  TrackingMode: 1
+  TrackingMode: 2
 --- !u!4 &2064766307
 Transform:
   m_ObjectHideFlags: 0

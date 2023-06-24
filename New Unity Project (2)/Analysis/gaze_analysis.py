@@ -4,15 +4,33 @@ import sys
 import csv
 
 def main():
-    gaze_data = pd.read_csv('../Assets/calibration_20230614180750.csv')
-    gaze_data = preprocess(gaze_data)
-    gaze_data = calc_gaze_point(gaze_data)
-    gaze_data = calc_cosine_error(gaze_data)
-    gaze_data = calc_euclidean_error(gaze_data)
+    headspace_gaze_data = pd.read_csv('calibration_20230623185804_headspace.csv')
+    worldspace_gaze_data = pd.read_csv('calibration_20230623185937_worldspace.csv')
+    trackingspace_gaze_data = pd.read_csv('calibration_20230623190219_trackingspace.csv')
 
-    error_data = gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
+    headspace_gaze_data = preprocess(headspace_gaze_data)
+    worldspace_gaze_data = preprocess(worldspace_gaze_data)
+    trackingspace_gaze_data = preprocess(trackingspace_gaze_data)
 
-    error_data.to_csv('error_data.csv')
+    headspace_gaze_data = calc_gaze_point(headspace_gaze_data)
+    headspace_gaze_data = calc_cosine_error(headspace_gaze_data)
+    headspace_gaze_data = calc_euclidean_error(headspace_gaze_data)
+
+    worldspace_gaze_data = calc_gaze_point(worldspace_gaze_data)
+    worldspace_gaze_data = calc_cosine_error(worldspace_gaze_data)
+    worldspace_gaze_data = calc_euclidean_error(worldspace_gaze_data)
+
+    trackingspace_gaze_data = calc_gaze_point(trackingspace_gaze_data)
+    trackingspace_gaze_data = calc_cosine_error(trackingspace_gaze_data)
+    trackingspace_gaze_data = calc_euclidean_error(trackingspace_gaze_data)
+
+    headspace_error_data = headspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
+    worldspace_error_data = worldspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
+    trackingspace_error_data = trackingspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
+    
+    headspace_error_data.to_csv('headspace_error_data.csv')
+    worldspace_error_data.to_csv('worldspace_error_data.csv')
+    trackingspace_error_data.to_csv('trackingspace_error_data.csv')
 
 def preprocess(df):
     result = df.loc[(df['Movement'] != "start") & (df['Movement'] != "transition")]
@@ -135,7 +153,9 @@ def calc_euclidean_error(df):
         x_dist = df.loc[i, 'Gaze Point_x'] - df.loc[i, 'Ball Position_x']
         y_dist = df.loc[i, 'Gaze Point_y'] - df.loc[i, 'Ball Position_y']
         z_dist = df.loc[i, 'Gaze Point_z'] - df.loc[i, 'Ball Position_z']
-        euclidean_error = np.sqrt(np.square(x_dist) + np.square(y_dist) + np.square(z_dist))
+        x_visual_angle = np.arctan2(x_dist, z_dist)
+        y_visual_angle = np.arctan2(y_dist, z_dist)
+        euclidean_error = np.degrees(np.sqrt((np.square(x_visual_angle) + np.square(y_visual_angle))/2))
         df.loc[i, 'Euclidean Error'] = euclidean_error
 
 

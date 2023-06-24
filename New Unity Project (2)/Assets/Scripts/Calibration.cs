@@ -72,7 +72,6 @@ public class Calibration : MonoBehaviour
 
         if (Input.GetKeyDown("q"))
         {
-            Debug.Log("q press");
             StartCalibration();
         }
 
@@ -109,7 +108,7 @@ public class Calibration : MonoBehaviour
             gridTransforms.Add(child);
         }
         isReady = true;
-        Debug.Log(isReady);
+        Debug.Log("isReady" + isReady);
 
     }
 

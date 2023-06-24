@@ -4,33 +4,49 @@ import sys
 import csv
 
 def main():
-    headspace_gaze_data = pd.read_csv('calibration_20230623185804_headspace.csv')
-    worldspace_gaze_data = pd.read_csv('calibration_20230623185937_worldspace.csv')
-    trackingspace_gaze_data = pd.read_csv('calibration_20230623190219_trackingspace.csv')
 
-    headspace_gaze_data = preprocess(headspace_gaze_data)
-    worldspace_gaze_data = preprocess(worldspace_gaze_data)
-    trackingspace_gaze_data = preprocess(trackingspace_gaze_data)
+    # headspace_gaze_data = pd.read_csv('calibration_20230623185804_headspace.csv')
+    # worldspace_gaze_data = pd.read_csv('calibration_20230623185937_worldspace.csv')
+    # trackingspace_gaze_data = pd.read_csv('calibration_20230623190219_trackingspace.csv')
 
-    headspace_gaze_data = calc_gaze_point(headspace_gaze_data)
-    headspace_gaze_data = calc_cosine_error(headspace_gaze_data)
-    headspace_gaze_data = calc_euclidean_error(headspace_gaze_data)
+    # headspace_gaze_data = preprocess(headspace_gaze_data)
+    # worldspace_gaze_data = preprocess(worldspace_gaze_data)
+    # trackingspace_gaze_data = preprocess(trackingspace_gaze_data)
 
-    worldspace_gaze_data = calc_gaze_point(worldspace_gaze_data)
-    worldspace_gaze_data = calc_cosine_error(worldspace_gaze_data)
-    worldspace_gaze_data = calc_euclidean_error(worldspace_gaze_data)
+    # headspace_gaze_data = calc_gaze_point(headspace_gaze_data)
+    # headspace_gaze_data = calc_cosine_error(headspace_gaze_data)
+    # headspace_gaze_data = calc_euclidean_error(headspace_gaze_data)
 
-    trackingspace_gaze_data = calc_gaze_point(trackingspace_gaze_data)
-    trackingspace_gaze_data = calc_cosine_error(trackingspace_gaze_data)
-    trackingspace_gaze_data = calc_euclidean_error(trackingspace_gaze_data)
+    # worldspace_gaze_data = calc_gaze_point(worldspace_gaze_data)
+    # worldspace_gaze_data = calc_cosine_error(worldspace_gaze_data)
+    # worldspace_gaze_data = calc_euclidean_error(worldspace_gaze_data)
 
-    headspace_error_data = headspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
-    worldspace_error_data = worldspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
-    trackingspace_error_data = trackingspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
+    # trackingspace_gaze_data = calc_gaze_point(trackingspace_gaze_data)
+    # trackingspace_gaze_data = calc_cosine_error(trackingspace_gaze_data)
+    # trackingspace_gaze_data = calc_euclidean_error(trackingspace_gaze_data)
+
+    # headspace_error_data = headspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
+    # worldspace_error_data = worldspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
+    # trackingspace_error_data = trackingspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
     
-    headspace_error_data.to_csv('headspace_error_data.csv')
-    worldspace_error_data.to_csv('worldspace_error_data.csv')
-    trackingspace_error_data.to_csv('trackingspace_error_data.csv')
+    # headspace_error_data.to_csv('headspace_error_data.csv')
+    # worldspace_error_data.to_csv('worldspace_error_data.csv')
+    # trackingspace_error_data.to_csv('trackingspace_error_data.csv')
+    
+    analyze('calibration_20230623211819_videosample.csv', 'videosample_error_data.csv')
+
+
+def analyze(input_csv, output_csv):
+    gaze_data = pd.read_csv(input_csv)
+    gaze_data = preprocess(gaze_data)
+    gaze_data = calc_gaze_point(gaze_data)
+    gaze_data = calc_cosine_error(gaze_data)
+    gaze_data = calc_euclidean_error(gaze_data)
+
+    gaze_error_data = gaze_data
+
+    gaze_error_data.to_csv(output_csv)
+
 
 def preprocess(df):
     result = df.loc[(df['Movement'] != "start") & (df['Movement'] != "transition")]
@@ -60,26 +76,51 @@ def calc_gaze_point(df):
     return df
 
 def calc_vector_intersection(p1, p2, r1, r2):
+    # err_intersection = 1
+    # err_divergence = 0
+
+    # p12 = p1 - p2
+
+    # t1 = 0.0
+    # t2 = 0.0
+
+    # r2dotr2 = np.dot(r2, r2)
+    # r1dotr1 = np.dot(r1, r1)
+    # r1dotr2 = np.dot(r1, r2)
+
+    # denom = pow(r1dotr2, 2) - (r1dotr1 * r2dotr2)
+
+    # if(r1dotr2 < sys.float_info.epsilon or abs(denom) < sys.float_info.epsilon):
+    #     err_intersection = 0
+    
+    # t2 = ((np.dot(p12, r1) * r2dotr2) - (np.dot(p12, r2) * r1dotr2)) / denom
+    # t1 = (np.dot(p12, r2) + t2 * r1dotr1) / r1dotr2
+
+    # if (t1 < 0 or t2 < 0):
+    #     err_divergence = 1
+
+    # pa = p1 + t1 * r1
+    # pb = p2 + t2 * r2
+
+    # pm = (pa + pb) / 2
+    # return pm, err_intersection, err_divergence
+
     err_intersection = 1
     err_divergence = 0
 
-    p12 = p1 - p2
-
-    t1 = 0.0
-    t2 = 0.0
-
+    p21 = p1 - p2
     r2dotr2 = np.dot(r2, r2)
+    r2dotr1 = np.dot(r2, r1)
     r1dotr1 = np.dot(r1, r1)
-    r1dotr2 = np.dot(r1, r2)
 
-    denom = pow(r1dotr2, 1) - (r1dotr1 * r2dotr2);
+    denom = pow(r2dotr1, 2) - (r1dotr1 * r2dotr2)
 
-    if(r1dotr2 < sys.float_info.epsilon or abs(denom) < sys.float_info.epsilon):
+    if(abs(r2dotr1) < sys.float_info.epsilon or abs(denom) < sys.float_info.epsilon):
         err_intersection = 0
-    
-    t2 = ((np.dot(p12, r1) * r2dotr2) - (np.dot(p12, r2) * r1dotr2)) / denom;
-    t1 = (np.dot(p12, r2) + t2 * r1dotr1) / r1dotr2;
 
+    t2 = ((np.dot(p21, r1) * r2dotr2) - (np.dot(p21, r2) * r2dotr1)) / denom
+    t1 = (np.dot(p21, r1) + (t2 * r1dotr1)) / r2dotr1
+    
     if (t1 < 0 or t2 < 0):
         err_divergence = 1
 
@@ -88,6 +129,7 @@ def calc_vector_intersection(p1, p2, r1, r2):
 
     pm = (pa + pb) / 2
     return pm, err_intersection, err_divergence
+
 
 def calc_cosine_error(df):
     # df['Expected_Left Gaze_x'] = df['Gaze_Left Eye Position_x'] - df['Ball Position_x']
@@ -145,7 +187,7 @@ def calc_cosine_error(df):
     
     # df['Cosine Similarity'] = df.apply(lambda row: np.degrees(np.arccos(np.dot(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']]), np.array([row['Expected Visual Angle_x'], row['Expected Visual Angle_y']]))/(np.linalg.norm(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']])) * np.linalg.norm(np.array([row['Expected Visual Angle_x'], df['Expected Visual Angle_y']]))))), axis=1)
     avg_cosine_similarity = df['Cosine Similarity'].mean()
-    print(avg_cosine_similarity)
+    print("cosine similarity:", avg_cosine_similarity)
     return df
 
 def calc_euclidean_error(df):
@@ -162,7 +204,7 @@ def calc_euclidean_error(df):
     # df['Euclidean Error'] = df.apply(lambda row: np.sqrt(np.square(row['Gaze Point_x'] - row['Ball Position_x']) + np.square(row['Gaze Point_y'] - row['Ball Position_y']) + np.square(row['Gaze Point_z'] - row['Ball Position_z'])))
     
     avg_euclidean_error = df['Euclidean Error'].mean()
-    print(avg_euclidean_error)
+    print("euclidean error:", avg_euclidean_error)
     return df
 
 if __name__ == "__main__":

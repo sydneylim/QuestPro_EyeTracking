@@ -32,8 +32,8 @@ def main():
     # headspace_error_data.to_csv('headspace_error_data.csv')
     # worldspace_error_data.to_csv('worldspace_error_data.csv')
     # trackingspace_error_data.to_csv('trackingspace_error_data.csv')
-    
-    analyze('calibration_20230623211819_videosample.csv', 'videosample_error_data.csv')
+    filename = "calibration_20230624213032"
+    analyze(filename + '.csv', filename + '_error_data.csv')
 
 
 def analyze(input_csv, output_csv):
@@ -192,12 +192,16 @@ def calc_cosine_error(df):
 
 def calc_euclidean_error(df):
     for i in range(len(df)):
-        x_dist = df.loc[i, 'Gaze Point_x'] - df.loc[i, 'Ball Position_x']
-        y_dist = df.loc[i, 'Gaze Point_y'] - df.loc[i, 'Ball Position_y']
-        z_dist = df.loc[i, 'Gaze Point_z'] - df.loc[i, 'Ball Position_z']
-        x_visual_angle = np.arctan2(x_dist, z_dist)
-        y_visual_angle = np.arctan2(y_dist, z_dist)
-        euclidean_error = np.degrees(np.sqrt((np.square(x_visual_angle) + np.square(y_visual_angle))/2))
+        gaze_position_visual_angle_x = np.arctan2(df.loc[i, 'Gaze Point_x'], df.loc[i, 'Gaze Point_z'])
+        gaze_position_visual_angle_y = np.arctan2(df.loc[i, 'Gaze Point_y'], df.loc[i, 'Gaze Point_z'])
+        
+        ball_position_visual_angle_x = np.arctan2(df.loc[i, 'Ball Position_x'], df.loc[i, 'Ball Position_z'])
+        ball_position_visual_angle_y = np.arctan2(df.loc[i, 'Ball Position_y'], df.loc[i, 'Ball Position_z'])
+        
+        x_dist = gaze_position_visual_angle_x - ball_position_visual_angle_x
+        y_dist = gaze_position_visual_angle_y - ball_position_visual_angle_y
+        
+        euclidean_error = np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist)))
         df.loc[i, 'Euclidean Error'] = euclidean_error
 
 

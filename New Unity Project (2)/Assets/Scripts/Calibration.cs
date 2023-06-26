@@ -46,12 +46,6 @@ public class Calibration : MonoBehaviour
         countdownText.SetActive(false);
         //countdownText.GetComponent<TextMesh>().text = Application.persistentDataPath;
 
-        if (recording)
-        {
-            filename = "calibration_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
-            GetComponent<DataLogger>().SaveFile(filename);
-            recording = false;
-        }
         edges.SetActive(false);
         currentObject.SetActive(false);
         GetComponent<Renderer>().enabled = false;
@@ -107,6 +101,7 @@ public class Calibration : MonoBehaviour
         {
             gridTransforms.Add(child);
         }
+        
         isReady = true;
         Debug.Log("isReady" + isReady);
 

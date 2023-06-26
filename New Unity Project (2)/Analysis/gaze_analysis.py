@@ -32,7 +32,7 @@ def main():
     # headspace_error_data.to_csv('headspace_error_data.csv')
     # worldspace_error_data.to_csv('worldspace_error_data.csv')
     # trackingspace_error_data.to_csv('trackingspace_error_data.csv')
-    filename = "screenStabilized_20230625224021_videosample"
+    filename = "calibration_20230626002250_trackingspace"
     analyze(filename + '.csv', filename + '_error_data.csv')
 
 

@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/test_ScreenSpace.unity
     guid: cf2b782aadec7e2499098dd3dc9ab05b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Calibration_Arrow.unity
     guid: 491ed65c89dfd274aa0aa0e33128372e
   - enabled: 0
@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Hallway.unity
     guid: 7a76a1ec7a5acf44699591bc42cb3b6b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ScreenStabilized_Arrow.unity
     guid: 9e2f594eecf7bbd44aa2cbc4e2614269
   m_configObjects:

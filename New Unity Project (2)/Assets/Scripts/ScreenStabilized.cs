@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class MovingSphere : MonoBehaviour
+public class ScreenStabilized : MonoBehaviour
 {
     public GameObject screenStabilized;
     public GameObject countdownText;
 
+    [SerializeField]
+    OVRCameraRig cameraRig;
+    
     private GameObject currentObject;
     private GameObject grid;
     private GameObject edges;
@@ -66,7 +69,7 @@ public class MovingSphere : MonoBehaviour
     {
        if (recording)
         {
-            GetComponent<CameraController>().AddFrame(frameNumber, movement);
+            cameraRig.GetComponent<CameraController>().AddFrame(frameNumber, movement);
             frameNumber++;
         }
         if (Input.GetKeyDown("q"))
@@ -119,9 +122,9 @@ public class MovingSphere : MonoBehaviour
     {
         isEvaluating = true;
         end = null;
-        filename = filenamePrefix + "_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "screenStabilized_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
-        GetComponent<DataLogger>().AddHeader();
+        cameraRig.GetComponent<CameraController>().AddHeader();
         chooseNewPath();
         transform.position = start.position;
         countdownText.SetActive(true);
@@ -147,7 +150,7 @@ public class MovingSphere : MonoBehaviour
         }
         GetComponent<Renderer>().enabled = false;
         recording = false;
-        GetComponent<CameraController>().SaveFile(filename);
+        cameraRig.GetComponent<CameraController>().SaveFile(filename);
         isReady = false;
         isEvaluating = false;
         countdownText.GetComponent<TextMesh>().text = "Done";

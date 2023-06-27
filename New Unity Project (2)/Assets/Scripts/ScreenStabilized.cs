@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScreenStabilized : MonoBehaviour
 {
@@ -62,6 +63,7 @@ public class ScreenStabilized : MonoBehaviour
         isReady = false;
         movement = "start";
         frameNumber = 0;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
     }
 
     // Update is called once per frame
@@ -157,6 +159,7 @@ public class ScreenStabilized : MonoBehaviour
         countdownText.SetActive(true);
         yield return new WaitForSeconds(1);
         countdownText.SetActive(false);
+        transform.gameObject.SetActive(false);
     }
 
     void chooseNewPath()

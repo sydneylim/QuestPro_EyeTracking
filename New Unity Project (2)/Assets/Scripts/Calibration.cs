@@ -4,6 +4,8 @@ using System.IO;
 using UnityEngine;
 using Oculus;
 using UnityEngine.XR;
+using UnityEngine.SceneManagement;
+
 
 public class Calibration : MonoBehaviour
 {
@@ -52,7 +54,9 @@ public class Calibration : MonoBehaviour
         isCalibrating = false;
         isReady = false;
         movement = "start";
-        frameNumber = 0;    
+        frameNumber = 0;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
+
     }
 
 

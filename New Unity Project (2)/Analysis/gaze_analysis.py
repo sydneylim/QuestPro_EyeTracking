@@ -32,7 +32,7 @@ def main():
     # headspace_error_data.to_csv('headspace_error_data.csv')
     # worldspace_error_data.to_csv('worldspace_error_data.csv')
     # trackingspace_error_data.to_csv('trackingspace_error_data.csv')
-    filename = "calibration_20230626002250_trackingspace"
+    filename = "worldStabilized_20230626214920"
     analyze(filename + '.csv', filename + '_error_data.csv')
 
 
@@ -167,21 +167,29 @@ def calc_cosine_error(df):
     df['Actual Gaze_y'] = df[['Gaze_Left Eye Position_y', 'Gaze_Right Eye Position_y']].mean(axis=1) - df['Gaze Point_y']
     df['Actual Gaze_z'] = df[['Gaze_Left Eye Position_z', 'Gaze_Right Eye Position_z']].mean(axis=1) - df['Gaze Point_z']
 
-    # calc visual angles
-    df['Expected Visual Angle_x'] = df.apply(lambda row: np.arctan2(row['Expected Gaze_x'], row['Expected Gaze_z']), axis=1)
-    df['Expected Visual Angle_y'] = df.apply(lambda row: np.arctan2(row['Expected Gaze_y'], row['Expected Gaze_z']), axis=1)
+    # # calc visual angles
+    # df['Expected Visual Angle_x'] = df.apply(lambda row: np.arctan2(row['Expected Gaze_x'], row['Expected Gaze_z']), axis=1)
+    # df['Expected Visual Angle_y'] = df.apply(lambda row: np.arctan2(row['Expected Gaze_y'], row['Expected Gaze_z']), axis=1)
 
-    df['Actual Visual Angle_x'] = df.apply(lambda row: np.arctan2(row['Actual Gaze_x'], row['Actual Gaze_z']), axis=1)
-    df['Actual Visual Angle_y'] = df.apply(lambda row: np.arctan2(row['Actual Gaze_y'], row['Actual Gaze_z']), axis=1)
+    # df['Actual Visual Angle_x'] = df.apply(lambda row: np.arctan2(row['Actual Gaze_x'], row['Actual Gaze_z']), axis=1)
+    # df['Actual Visual Angle_y'] = df.apply(lambda row: np.arctan2(row['Actual Gaze_y'], row['Actual Gaze_z']), axis=1)
 
     # calc cosine similarity
     for i in range(len(df)):
-        actual_visual_angle = np.array([df.loc[i, 'Actual Visual Angle_x'], df.loc[i, 'Actual Visual Angle_y']])
-        expected_visual_angle = np.array([df.loc[i, 'Expected Visual Angle_x'], df.loc[i, 'Expected Visual Angle_y']])
-        actual_dot_expected = np.dot(actual_visual_angle, expected_visual_angle)
-        actual_visual_angle_norm = np.linalg.norm(actual_visual_angle)
-        expected_visual_angle_norm = np.linalg.norm(expected_visual_angle)
-        cosine_similarity = np.degrees(np.arccos(actual_dot_expected / (actual_visual_angle_norm * expected_visual_angle_norm)))   
+        # actual_visual_angle = np.array([df.loc[i, 'Actual Visual Angle_x'], df.loc[i, 'Actual Visual Angle_y']])
+        # expected_visual_angle = np.array([df.loc[i, 'Expected Visual Angle_x'], df.loc[i, 'Expected Visual Angle_y']])
+        # actual_dot_expected = np.dot(actual_visual_angle, expected_visual_angle)
+        # actual_visual_angle_norm = np.linalg.norm(actual_visual_angle)
+        # expected_visual_angle_norm = np.linalg.norm(expected_visual_angle)
+        # cosine_similarity = np.degrees(np.arccos(actual_dot_expected / (actual_visual_angle_norm * expected_visual_angle_norm)))   
+        # df.loc[i, 'Cosine Similarity'] = cosine_similarity
+
+        actual_gaze = np.array([df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z']])
+        expected_gaze = np.array([df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z']])
+        actual_dot_expected = np.dot(actual_gaze, expected_gaze)
+        actual_gaze_norm = np.linalg.norm(actual_gaze)
+        expected_gaze_norm = np.linalg.norm(expected_gaze)
+        cosine_similarity = np.degrees(np.arccos(actual_dot_expected / (actual_gaze_norm * expected_gaze_norm)))   
         df.loc[i, 'Cosine Similarity'] = cosine_similarity
 
     

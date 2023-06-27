@@ -302,23 +302,6 @@ Transform:
   m_Father: {fileID: 2132615336}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &489127263 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5199079002082116974, guid: 088d13543cbed9b409aa6e1e16d16724, type: 3}
-  m_PrefabInstance: {fileID: 5199079001927810153}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &489127270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489127263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09f04770e4cdfac47826db5a00f354a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &510378464 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7245846620750251257, guid: 8e75c60dce29fea459f523c464bac670, type: 3}
@@ -343,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CalibrationObject: {fileID: 2028651263}
   countdownText: {fileID: 2125517570}
-  debugText: {fileID: 1544118657}
+  cameraRig: {fileID: 0}
 --- !u!1001 &604674434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -750,23 +733,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2342409756849830688, guid: 1d0ae80a1d74d2c488cdf6920da539dd, type: 3}
   m_PrefabInstance: {fileID: 1222083477}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1261598476 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6951232774861438142, guid: 8f93ea5178939994daca391dba30d737, type: 3}
-  m_PrefabInstance: {fileID: 6951232775053444491}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1261598483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1261598476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09f04770e4cdfac47826db5a00f354a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1285088711 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 156915611154346185, guid: 746d0f2832669f14ab7b332bdc1ff703, type: 3}
@@ -844,11 +810,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 459718, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
   m_PrefabInstance: {fileID: 1828601335}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1544118657 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2342409756849830687, guid: 1d0ae80a1d74d2c488cdf6920da539dd, type: 3}
-  m_PrefabInstance: {fileID: 604674434}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1544118658 stripped
 Transform:
@@ -998,6 +959,10 @@ MonoBehaviour:
   colorMapEditorBrightness: 0
   colorMapEditorPosterize: 0
   colorMapEditorSaturation: 0
+  _colorLutSourceTexture: {fileID: 0}
+  _colorLutTargetTexture: {fileID: 0}
+  _lutWeight: 1
+  _flipLutY: 1
   serializedSurfaceGeometry: []
   textureOpacity_: 1
   edgeRenderingEnabled_: 0

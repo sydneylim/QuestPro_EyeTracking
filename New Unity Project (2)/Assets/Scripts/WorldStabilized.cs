@@ -89,6 +89,63 @@ public class WorldStabilized : MonoBehaviour
                 StartCoroutine(Evaluation());
             }
         }
+
+        if (Input.GetKeyDown("up") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.position += currentObject.transform.up * 0.05f;
+            }
+        }
+        if (Input.GetKeyDown("down") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.position -= currentObject.transform.up * 0.05f;
+            }
+        }
+        if (Input.GetKeyDown("left") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.position -= currentObject.transform.right * 0.05f;
+            }
+        }
+        if (Input.GetKeyDown("right") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.position += currentObject.transform.right * 0.05f;
+            }
+        }
+        if (Input.GetKeyDown("w") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.position += currentObject.transform.forward * 0.05f;
+            }
+        }
+        if (Input.GetKeyDown("s") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.position -= currentObject.transform.forward * 0.05f;
+            }
+        }
+        if (Input.GetKeyDown("a") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.Rotate(0.0f, 30.0f, 0.0f, Space.World);
+            }
+        }
+        if (Input.GetKeyDown("d") && !isEvaluating)
+        {
+            if (currentObject != null)
+            {
+                currentObject.transform.Rotate(0.0f, 30.0f, 0.0f, Space.World);
+            }
+        }
     }
 
 

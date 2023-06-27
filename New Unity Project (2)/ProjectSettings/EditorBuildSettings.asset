@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Home.unity
     guid: 2ad1ccf1bff82914989a6f028996f324
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Calibration_Arrow.unity
     guid: 491ed65c89dfd274aa0aa0e33128372e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ScreenStabilized_Arrow.unity
     guid: 9e2f594eecf7bbd44aa2cbc4e2614269
   - enabled: 1

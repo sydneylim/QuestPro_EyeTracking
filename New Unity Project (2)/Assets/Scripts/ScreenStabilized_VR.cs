@@ -4,14 +4,14 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ScreenStabilized : MonoBehaviour
+public class ScreenStabilized_VR : MonoBehaviour
 {
     public GameObject screenStabilized;
     public GameObject countdownText;
+    public GameObject gazeControllers;
+    public GameObject leftHandController;
+    public GameObject rightHandController;
 
-    [SerializeField]
-    OVRCameraRig cameraRig;
-    
     private GameObject currentObject;
     private GameObject grid;
     private GameObject edges;
@@ -71,7 +71,7 @@ public class ScreenStabilized : MonoBehaviour
     {
        if (recording)
         {
-            cameraRig.GetComponent<CameraController>().AddFrame(frameNumber, movement);
+            gazeControllers.GetComponent<CameraController_VR>().AddFrame(frameNumber, movement);
             frameNumber++;
         }
         if (Input.GetKeyDown("q"))
@@ -179,11 +179,15 @@ public class ScreenStabilized : MonoBehaviour
 
     IEnumerator Evaluation()
     {
+
+        leftHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+        rightHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+
         isEvaluating = true;
         end = null;
-        filename = "screenStabilized_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "screenStabilizedVR_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
-        cameraRig.GetComponent<CameraController>().AddHeader();
+        gazeControllers.GetComponent<CameraController_VR>().AddHeader();
         chooseNewPath();
         transform.position = start.position;
         countdownText.SetActive(true);
@@ -209,7 +213,7 @@ public class ScreenStabilized : MonoBehaviour
         }
         GetComponent<Renderer>().enabled = false;
         recording = false;
-        cameraRig.GetComponent<CameraController>().SaveFile(filename);
+        gazeControllers.GetComponent<CameraController_VR>().SaveFile(filename);
         isReady = false;
         isEvaluating = false;
         countdownText.GetComponent<TextMesh>().text = "Done";

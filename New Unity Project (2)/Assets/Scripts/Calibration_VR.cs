@@ -7,13 +7,13 @@ using UnityEngine.XR;
 using UnityEngine.SceneManagement;
 
 
-public class Calibration : MonoBehaviour
+public class Calibration_VR : MonoBehaviour
 {
     public GameObject CalibrationObject;
     public GameObject countdownText;
-    
-    [SerializeField]
-    OVRCameraRig cameraRig;
+    public GameObject gazeControllers;
+    public GameObject leftHandController;
+    public GameObject rightHandController;
     
     private GameObject currentObject;
     private GameObject grid;
@@ -64,7 +64,7 @@ public class Calibration : MonoBehaviour
     void Update()
     {
         if(recording) {
-            cameraRig.GetComponent<CameraController>().AddFrame(frameNumber, movement);
+            gazeControllers.GetComponent<CameraController_VR>().AddFrame(frameNumber, movement);
             frameNumber++;
         }
 
@@ -170,13 +170,17 @@ public class Calibration : MonoBehaviour
 
     IEnumerator calibration()
     {
+
+        leftHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+        rightHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+
         isReady = false;
         isCalibrating = true;
-        filename = "calibration_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "calibrationVR_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
         movement = "start";
 
-        cameraRig.GetComponent<CameraController>().AddHeader();
+        gazeControllers.GetComponent<CameraController_VR>().AddHeader();
         countdownText.SetActive(true);
 
         List<int> indices = new List<int>();
@@ -215,7 +219,7 @@ public class Calibration : MonoBehaviour
 
         GetComponent<Renderer>().enabled = false;
         recording = false;
-        cameraRig.GetComponent<CameraController>().SaveFile(filename);
+        gazeControllers.GetComponent<CameraController_VR>().SaveFile(filename);
         frameNumber = 0;
         isCalibrating = false;
         countdownText.SetActive(true);

@@ -32,7 +32,7 @@ def main():
     # headspace_error_data.to_csv('headspace_error_data.csv')
     # worldspace_error_data.to_csv('worldspace_error_data.csv')
     # trackingspace_error_data.to_csv('trackingspace_error_data.csv')
-    filename = "worldStabilizedVR_20230627190139"
+    filename = "calibrationVR_20230627222824"
     analyze(filename + '.csv', filename + '_error_data.csv')
 
 

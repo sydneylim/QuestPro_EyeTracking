@@ -25,6 +25,19 @@ public class SceneController : MonoBehaviour
         {
             StartCoroutine(LoadWorldStabilizedScene());
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            StartCoroutine(LoadCalibrationVRScene());
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            StartCoroutine(LoadScreenStabilizedVRScene());
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            StartCoroutine(LoadWorldStabilizedVRScene());
+        }
+        
         else {
             Debug.Log("invalid scene number");
         }
@@ -63,4 +76,36 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    IEnumerator LoadCalibrationVRScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Calibration_VR");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    IEnumerator LoadScreenStabilizedVRScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ScreenStabilized_VR");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    IEnumerator LoadWorldStabilizedVRScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_VR");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
 }

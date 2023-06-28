@@ -9,7 +9,9 @@ public class WorldStabilized : MonoBehaviour
 {
     public GameObject worldStabilized;
     public GameObject countdownText;
-
+    public GameObject leftHandController;
+    public GameObject rightHandController;
+    
     [SerializeField]
     OVRCameraRig cameraRig;
     
@@ -180,6 +182,9 @@ public class WorldStabilized : MonoBehaviour
 
     IEnumerator Evaluation()
     {
+        leftHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+        rightHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+
         isEvaluating = true;
         end = null;
         filename = "worldStabilized_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";

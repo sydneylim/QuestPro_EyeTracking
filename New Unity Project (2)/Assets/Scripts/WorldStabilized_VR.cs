@@ -5,14 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class WorldStabilized : MonoBehaviour
+public class WorldStabilized_VR : MonoBehaviour
 {
     public GameObject worldStabilized;
     public GameObject countdownText;
+    public GameObject gazeControllers;
 
-    [SerializeField]
-    OVRCameraRig cameraRig;
-    
     private GameObject currentObject;
     private GameObject grid;
     private GameObject edges;
@@ -72,7 +70,7 @@ public class WorldStabilized : MonoBehaviour
     {
        if (recording)
         {
-            cameraRig.GetComponent<CameraController>().AddFrame(frameNumber, movement);
+            gazeControllers.GetComponent<CameraController_VR>().AddFrame(frameNumber, movement);
             frameNumber++;
         }
         if (Input.GetKeyDown("q"))
@@ -182,9 +180,9 @@ public class WorldStabilized : MonoBehaviour
     {
         isEvaluating = true;
         end = null;
-        filename = "worldStabilized_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "worldStabilizedVR_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
-        cameraRig.GetComponent<CameraController>().AddHeader();
+        gazeControllers.GetComponent<CameraController_VR>().AddHeader();
         chooseNewPath();
         transform.position = start.position;
         countdownText.SetActive(true);
@@ -210,7 +208,7 @@ public class WorldStabilized : MonoBehaviour
         }
         GetComponent<Renderer>().enabled = false;
         recording = false;
-        cameraRig.GetComponent<CameraController>().SaveFile(filename);
+        gazeControllers.GetComponent<CameraController_VR>().SaveFile(filename);
         isReady = false;
         isEvaluating = false;
         countdownText.GetComponent<TextMesh>().text = "Done";

@@ -4,12 +4,13 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class WorldStabilized_VR : MonoBehaviour
 {
     public GameObject worldStabilized;
     public GameObject countdownText;
     public GameObject gazeControllers;
+    public GameObject leftHandController;
+    public GameObject rightHandController;
 
     private GameObject currentObject;
     private GameObject grid;
@@ -149,6 +150,11 @@ public class WorldStabilized_VR : MonoBehaviour
 
     public void StartEvaluation()
     {
+        // Component[] components = leftHandController.GetComponents(typeof(Component));
+        // foreach(Component component in components) {
+        //     Debug.Log(component.ToString());
+        // }
+        
         isEvaluating = false;
 
         if (edges != null)
@@ -178,6 +184,10 @@ public class WorldStabilized_VR : MonoBehaviour
 
     IEnumerator Evaluation()
     {
+
+        leftHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+        rightHandController.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRInteractorLineVisual>().enabled = false;
+
         isEvaluating = true;
         end = null;
         filename = "worldStabilizedVR_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";

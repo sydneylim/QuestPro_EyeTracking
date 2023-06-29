@@ -32,8 +32,11 @@ def main():
     # headspace_error_data.to_csv('headspace_error_data.csv')
     # worldspace_error_data.to_csv('worldspace_error_data.csv')
     # trackingspace_error_data.to_csv('trackingspace_error_data.csv')
-    filename = "worldStabilized_20230626214920"
-    analyze(filename + '.csv', filename + '_error_data.csv')
+    filenames = ["calibration_20230629001433", "screenStabilized_20230629001523", "worldStabilized_20230629001800"]
+
+    for filename in filenames:
+        print(filename)
+        analyze(filename + '.csv', filename + '_error_data.csv')
 
 
 def analyze(input_csv, output_csv):
@@ -195,19 +198,19 @@ def calc_cosine_error(df):
     
     # df['Cosine Similarity'] = df.apply(lambda row: np.degrees(np.arccos(np.dot(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']]), np.array([row['Expected Visual Angle_x'], row['Expected Visual Angle_y']]))/(np.linalg.norm(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']])) * np.linalg.norm(np.array([row['Expected Visual Angle_x'], df['Expected Visual Angle_y']]))))), axis=1)
     avg_cosine_similarity = df['Cosine Similarity'].mean()
-    print("cosine similarity:", avg_cosine_similarity)
+    print("    cosine similarity:", avg_cosine_similarity)
     return df
 
 def calc_euclidean_error(df):
     for i in range(len(df)):
-        gaze_position_visual_angle_x = np.arctan2(df.loc[i, 'Gaze Point_x'], df.loc[i, 'Gaze Point_z'])
-        gaze_position_visual_angle_y = np.arctan2(df.loc[i, 'Gaze Point_y'], df.loc[i, 'Gaze Point_z'])
+        actual_gaze_visual_angle_x = np.arctan2(df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_z'])
+        actual_gaze_visual_angle_y = np.arctan2(df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z'])
         
-        ball_position_visual_angle_x = np.arctan2(df.loc[i, 'Ball Position_x'], df.loc[i, 'Ball Position_z'])
-        ball_position_visual_angle_y = np.arctan2(df.loc[i, 'Ball Position_y'], df.loc[i, 'Ball Position_z'])
+        expected_gaze_visual_angle_x = np.arctan2(df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_z'])
+        expected_gaze_visual_angle_y = np.arctan2(df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z'])
         
-        x_dist = gaze_position_visual_angle_x - ball_position_visual_angle_x
-        y_dist = gaze_position_visual_angle_y - ball_position_visual_angle_y
+        x_dist = actual_gaze_visual_angle_x - expected_gaze_visual_angle_x
+        y_dist = actual_gaze_visual_angle_y - expected_gaze_visual_angle_y
         
         euclidean_error = np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist)))
         df.loc[i, 'Euclidean Error'] = euclidean_error
@@ -216,7 +219,7 @@ def calc_euclidean_error(df):
     # df['Euclidean Error'] = df.apply(lambda row: np.sqrt(np.square(row['Gaze Point_x'] - row['Ball Position_x']) + np.square(row['Gaze Point_y'] - row['Ball Position_y']) + np.square(row['Gaze Point_z'] - row['Ball Position_z'])))
     
     avg_euclidean_error = df['Euclidean Error'].mean()
-    print("euclidean error:", avg_euclidean_error)
+    print("    euclidean error:", avg_euclidean_error)
     return df
 
 if __name__ == "__main__":

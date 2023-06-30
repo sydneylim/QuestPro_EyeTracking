@@ -4,36 +4,8 @@ import sys
 import csv
 
 def main():
-
-    # headspace_gaze_data = pd.read_csv('calibration_20230623185804_headspace.csv')
-    # worldspace_gaze_data = pd.read_csv('calibration_20230623185937_worldspace.csv')
-    # trackingspace_gaze_data = pd.read_csv('calibration_20230623190219_trackingspace.csv')
-
-    # headspace_gaze_data = preprocess(headspace_gaze_data)
-    # worldspace_gaze_data = preprocess(worldspace_gaze_data)
-    # trackingspace_gaze_data = preprocess(trackingspace_gaze_data)
-
-    # headspace_gaze_data = calc_gaze_point(headspace_gaze_data)
-    # headspace_gaze_data = calc_cosine_error(headspace_gaze_data)
-    # headspace_gaze_data = calc_euclidean_error(headspace_gaze_data)
-
-    # worldspace_gaze_data = calc_gaze_point(worldspace_gaze_data)
-    # worldspace_gaze_data = calc_cosine_error(worldspace_gaze_data)
-    # worldspace_gaze_data = calc_euclidean_error(worldspace_gaze_data)
-
-    # trackingspace_gaze_data = calc_gaze_point(trackingspace_gaze_data)
-    # trackingspace_gaze_data = calc_cosine_error(trackingspace_gaze_data)
-    # trackingspace_gaze_data = calc_euclidean_error(trackingspace_gaze_data)
-
-    # headspace_error_data = headspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
-    # worldspace_error_data = worldspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
-    # trackingspace_error_data = trackingspace_gaze_data[['Frame', 'Movement', 'Gaze Point_x', 'Gaze Point_y', 'Gaze Point_z', 'Ball Position_x', 'Ball Position_y', 'Ball Position_z', 'Cosine Similarity', 'Euclidean Error']]
-    
-    # headspace_error_data.to_csv('headspace_error_data.csv')
-    # worldspace_error_data.to_csv('worldspace_error_data.csv')
-    # trackingspace_error_data.to_csv('trackingspace_error_data.csv')
     filenames = ["calibrationVR_20230629001943", "calibrationVR_20230629002034", "screenStabilizedVR_20230629002118", "worldStabilizedVR_20230629002302"]
-    
+
     for filename in filenames:
         print(filename)
         analyze(filename + '.csv', filename + '_error_data.csv')
@@ -108,8 +80,8 @@ def calc_vector_intersection(p1, p2, r1, r2):
     # pm = (pa + pb) / 2
     # return pm, err_intersection, err_divergence
 
-    err_intersection = 1
-    err_divergence = 0
+    intersection = 1
+    divergence = 0
 
     p21 = p1 - p2
     r2dotr2 = np.dot(r2, r2)
@@ -119,19 +91,20 @@ def calc_vector_intersection(p1, p2, r1, r2):
     denom = pow(r2dotr1, 2) - (r1dotr1 * r2dotr2)
 
     if(abs(r2dotr1) < sys.float_info.epsilon or abs(denom) < sys.float_info.epsilon):
-        err_intersection = 0
-
+        intersection = 0
+        return [float('NaN'), float('NaN'), float('NaN')], intersection, divergence
+        
     t2 = ((np.dot(p21, r1) * r2dotr2) - (np.dot(p21, r2) * r2dotr1)) / denom
     t1 = (np.dot(p21, r1) + (t2 * r1dotr1)) / r2dotr1
     
     if (t1 < 0 or t2 < 0):
-        err_divergence = 1
+        divergence = 1
 
     pa = p1 + t1 * r1
     pb = p2 + t2 * r2
 
     pm = (pa + pb) / 2
-    return pm, err_intersection, err_divergence
+    return pm, intersection, divergence
 
 
 def calc_cosine_error(df):

@@ -89,6 +89,11 @@ public class WorldStabilized_VR : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            StartCoroutine(LoadHomeScene());
+        }
+
         if (Input.GetKeyDown("up") && !isEvaluating)
         {
             if (currentObject != null)
@@ -145,6 +150,7 @@ public class WorldStabilized_VR : MonoBehaviour
                 currentObject.transform.Rotate(0.0f, 30.0f, 0.0f, Space.World);
             }
         }
+        
     }
 
 
@@ -243,6 +249,17 @@ public class WorldStabilized_VR : MonoBehaviour
             endIndex = nextPos[startIndex];
             start = gridTransforms[startIndex];
             end = gridTransforms[endIndex];
+        }
+    }
+
+    IEnumerator LoadHomeScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
         }
     }
 }

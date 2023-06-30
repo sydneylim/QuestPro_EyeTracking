@@ -108,4 +108,15 @@ public class SceneController : MonoBehaviour
             yield return null;
         }
     }
+
+    IEnumerator LoadHomeScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
 }

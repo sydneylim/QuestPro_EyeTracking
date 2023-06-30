@@ -89,6 +89,12 @@ public class ScreenStabilized : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            StartCoroutine(LoadHomeScene());
+        }
+
+
         if (Input.GetKeyDown("up") && !isEvaluating)
         {
             if (currentObject != null)
@@ -234,6 +240,17 @@ public class ScreenStabilized : MonoBehaviour
             endIndex = nextPos[startIndex];
             start = gridTransforms[startIndex];
             end = gridTransforms[endIndex];
+        }
+    }
+
+    IEnumerator LoadHomeScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
         }
     }
 }

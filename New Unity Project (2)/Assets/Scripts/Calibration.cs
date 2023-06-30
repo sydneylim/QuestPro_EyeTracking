@@ -84,6 +84,12 @@ public class Calibration : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            StartCoroutine(LoadHomeScene());
+        }
+
+
         if (Input.GetKeyDown("up") && !isCalibrating)
         {
             if (currentObject != null)
@@ -224,5 +230,16 @@ public class Calibration : MonoBehaviour
         yield return new WaitForSeconds(1);
         countdownText.SetActive(false);
         transform.gameObject.SetActive(false);
+    }
+
+    IEnumerator LoadHomeScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 }

@@ -220,7 +220,7 @@ public class ScreenStabilized : MonoBehaviour
         isEvaluating = false;
         countdownText.GetComponent<TextMesh>().text = "Done";
         countdownText.SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         countdownText.SetActive(false);
         transform.gameObject.SetActive(false);
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SimpleRoomController : MonoBehaviour
 {
+    public GameObject debugText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,46 +15,43 @@ public class SimpleRoomController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         if (Input.GetKeyDown("up"))
+        if (Input.GetKeyDown("i"))
         {
-            transform.position += transform.up * 0.05f;
+            transform.position += transform.up * 0.01f;
         }
-        if (Input.GetKeyDown("down"))
+        if (Input.GetKeyDown("k"))
         {
-            transform.position -= transform.up * 0.05f;
+            transform.position -= transform.up * 0.01f;
         }
-        if (Input.GetKeyDown("left"))
+        if (Input.GetKeyDown("j"))
         {
-            transform.position -= transform.right * 0.05f;
+            transform.position -= transform.right * 0.01f;
         }
-        if (Input.GetKeyDown("right"))
+        if (Input.GetKeyDown("l"))
         {
-            transform.position += transform.right * 0.05f;
+            transform.position += transform.right * 0.01f;
         }
-        if (Input.GetKeyDown("w"))
+        if (Input.GetKeyDown("v"))
         {
-            transform.position += transform.forward * 0.05f;
+            transform.position += transform.forward * 0.01f;
         }
-        if (Input.GetKeyDown("s"))
+        if (Input.GetKeyDown("b"))
         {
-            transform.position -= transform.forward * 0.05f; 
+            transform.position -= transform.forward * 0.01f; 
         }
-        if (Input.GetKeyDown("a"))
-        {
-            transform.Rotate(0.0f, -1.0f, 0.0f, Space.World);
-        }
-        if (Input.GetKeyDown("d"))
-        {
-            transform.Rotate(0.0f, 1.0f, 0.0f, Space.World);
-        }
-        
         if (Input.GetKeyDown("n"))
         {
-            transform.localScale += new Vector3(1,1,1) * 0.01f;
+            transform.Rotate(0.0f, -0.1f, 0.0f, Space.World);
         }
         if (Input.GetKeyDown("m"))
         {
-            transform.localScale -= new Vector3(1,1,1) * 0.01f;
+            transform.Rotate(0.0f, 0.1f, 0.0f, Space.World);
+        }
+        
+        if(Input.GetKeyDown("p"))
+        {
+            debugText.GetComponent<TextMesh>().text = "position: " + transform.position + "\n rotation: " + transform.rotation;
         }
     }
+
 }

@@ -230,7 +230,7 @@ public class Calibration_VR : MonoBehaviour
         countdownText.SetActive(true);
         countdownText.GetComponent<TextMesh>().text = "Done";
         countdownText.SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         countdownText.SetActive(false);
         transform.gameObject.SetActive(false);
     }

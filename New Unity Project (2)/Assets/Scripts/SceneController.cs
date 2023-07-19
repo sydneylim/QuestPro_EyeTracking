@@ -78,7 +78,7 @@ public class SceneController : MonoBehaviour
 
     IEnumerator LoadCalibrationVRScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Calibration_VR");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Calibration_HFH5102B_Simple");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -89,7 +89,7 @@ public class SceneController : MonoBehaviour
 
     IEnumerator LoadScreenStabilizedVRScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ScreenStabilized_VR");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ScreenStabilized_HFH5102B_Simple");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -100,7 +100,7 @@ public class SceneController : MonoBehaviour
 
     IEnumerator LoadWorldStabilizedVRScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_VR");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_HFH5102B_Simple");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

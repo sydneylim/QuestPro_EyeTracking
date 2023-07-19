@@ -85,8 +85,10 @@ public class WorldStabilized : MonoBehaviour
         {
             if (isReady)
             {
+                grid = worldStabilized.transform.Find("Positions").gameObject;
+                edges = worldStabilized.transform.Find("Edges").gameObject;
+                grid.SetActive(false);
                 edges.SetActive(false);
-                currentObject.SetActive(false);
                 recording = true;
                 StartCoroutine(Evaluation());
             }
@@ -226,7 +228,7 @@ public class WorldStabilized : MonoBehaviour
         isEvaluating = false;
         countdownText.GetComponent<TextMesh>().text = "Done";
         countdownText.SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         countdownText.SetActive(false);
         transform.gameObject.SetActive(false);
     }

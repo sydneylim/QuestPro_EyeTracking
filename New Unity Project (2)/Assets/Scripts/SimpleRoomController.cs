@@ -50,7 +50,7 @@ public class SimpleRoomController : MonoBehaviour
         
         if(Input.GetKeyDown("p"))
         {
-            debugText.GetComponent<TextMesh>().text = "position: " + transform.position + "\n rotation: " + transform.rotation;
+            debugText.GetComponent<TextMesh>().text = "position: " + transform.position + "\n rotation: " + transform.eulerAngles;
         }
     }
 

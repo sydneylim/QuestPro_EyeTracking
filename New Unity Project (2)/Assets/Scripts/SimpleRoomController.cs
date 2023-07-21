@@ -17,27 +17,27 @@ public class SimpleRoomController : MonoBehaviour
     {
         if (Input.GetKeyDown("i"))
         {
-            transform.position += transform.up * 0.01f;
+            transform.position += transform.up * 0.05f;
         }
         if (Input.GetKeyDown("k"))
         {
-            transform.position -= transform.up * 0.01f;
+            transform.position -= transform.up * 0.05f;
         }
         if (Input.GetKeyDown("j"))
         {
-            transform.position -= transform.right * 0.01f;
+            transform.position -= transform.right * 0.05f;
         }
         if (Input.GetKeyDown("l"))
         {
-            transform.position += transform.right * 0.01f;
+            transform.position += transform.right * 0.05f;
         }
         if (Input.GetKeyDown("v"))
         {
-            transform.position += transform.forward * 0.01f;
+            transform.position += transform.forward * 0.05f;
         }
         if (Input.GetKeyDown("b"))
         {
-            transform.position -= transform.forward * 0.01f; 
+            transform.position -= transform.forward * 0.05f; 
         }
         if (Input.GetKeyDown("n"))
         {

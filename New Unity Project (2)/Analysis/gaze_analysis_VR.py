@@ -4,8 +4,8 @@ import sys
 import csv
 
 def main():
-    filenames = ["calibrationVR_20230629001943", "calibrationVR_20230629002034", "screenStabilizedVR_20230629002118", "worldStabilizedVR_20230629002302"]
-
+    # filenames = ["calibrationVR_20230629001943", "calibrationVR_20230629002034", "screenStabilizedVR_20230629002118", "worldStabilizedVR_20230629002302"]
+    filenames = ["worldStabilizedVR_20230720150042", "worldStabilizedVR_20230720150301", "worldStabilizedVR_20230720150517"]
     for filename in filenames:
         print(filename)
         analyze(filename + '.csv', filename + '_error_data.csv')

@@ -4,13 +4,13 @@ import sys
 import csv
 
 def main():
-    filenames = ["worldStabilized_20230720145820_walking"]
+    # filenames = ["worldStabilized_20230720145820_walking"]
     # filenames = ["calibration_20230629001433", "screenStabilized_20230629001523", "worldStabilized_20230629001800"]
-    # filenames = ["calibration_20230720143538", "calibration_20230720143628", "calibration_20230720143715",
-    #             "screenStabilized_20230720143802", "screenStabilized_20230720143946", "screenStabilized_20230720144124", 
-    #             "worldStabilized_20230720144329", "worldStabilized_20230720144529", "worldStabilized_20230720144735", 
-    #             "screenStabilized_20230720144932_walking", "screenStabilized_20230720145112_walking", "screenStabilized_20230720145242_walking", 
-    #             "worldStabilized_20230720145434_walking", "worldStabilized_20230720145633_walking", "worldStabilized_20230720145820_walking"]
+    filenames = ["calibration_20230720143538", "calibration_20230720143628", "calibration_20230720143715",
+                "screenStabilized_20230720143802", "screenStabilized_20230720143946", "screenStabilized_20230720144124", 
+                "worldStabilized_20230720144329", "worldStabilized_20230720144529", "worldStabilized_20230720144735", 
+                "screenStabilized_20230720144932_walking", "screenStabilized_20230720145112_walking", "screenStabilized_20230720145242_walking", 
+                "worldStabilized_20230720145434_walking", "worldStabilized_20230720145633_walking", "worldStabilized_20230720145820_walking"]
     for filename in filenames:
         print(filename)
         analyze(filename + '.csv', filename + '_error_data.csv')
@@ -190,26 +190,29 @@ def calc_euclidean_error(df):
         x_dist = actual_gaze_visual_angle_x - expected_gaze_visual_angle_x
         y_dist = actual_gaze_visual_angle_y - expected_gaze_visual_angle_y
         
+        x_dist = (x_dist + np.pi) % (np.pi*2) - np.pi
+        y_dist = (y_dist + np.pi) % (np.pi*2) - np.pi
+
         euclidean_error = np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist)))
         df.loc[i, 'Euclidean Error'] = euclidean_error
 
-        if(i == 29 or i == i == 859):
-            print("frame " , i)
-            print("actual gaze: ", df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z'])
-            print("expected gaze: ", df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z'])
+        # if(i == 29 or i == 859):
+        #     print("frame " , i)
+        #     print("actual gaze: ", df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z'])
+        #     print("expected gaze: ", df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z'])
 
-            print("actual x: ", np.arctan2(df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_z']))
-            print("actual y: ", np.arctan2(df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z']))
-            print("expected x: ", np.arctan2(df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_z']))
-            print("expected y: ", np.arctan2(df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z']))
+        #     print("actual x: ", np.arctan2(df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_z']))
+        #     print("actual y: ", np.arctan2(df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z']))
+        #     print("expected x: ", np.arctan2(df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_z']))
+        #     print("expected y: ", np.arctan2(df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z']))
 
-            print("x dist: ", x_dist)
-            print("y dist: ", y_dist)
+        #     print("x dist: ", x_dist)
+        #     print("y dist: ", y_dist)
 
-            print("square dist:", np.square(x_dist) + np.square(y_dist))
-            print("sqrt: ", np.sqrt(np.square(x_dist) + np.square(y_dist)))
-            print("in degrees: ", np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist))))
-            print("--------------------")
+        #     print("square dist:", np.square(x_dist) + np.square(y_dist))
+        #     print("sqrt: ", np.sqrt(np.square(x_dist) + np.square(y_dist)))
+        #     print("in degrees: ", np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist))))
+        #     print("--------------------")
 
 
     # df['Euclidean Error'] = df.apply(lambda row: np.sqrt(np.square(row['Gaze Point_x'] - row['Ball Position_x']) + np.square(row['Gaze Point_y'] - row['Ball Position_y']) + np.square(row['Gaze Point_z'] - row['Ball Position_z'])))

@@ -185,6 +185,9 @@ def calc_euclidean_error(df):
         x_dist = actual_gaze_visual_angle_x - expected_gaze_visual_angle_x
         y_dist = actual_gaze_visual_angle_y - expected_gaze_visual_angle_y
         
+        x_dist = (x_dist + np.pi) % (np.pi*2) - np.pi
+        y_dist = (y_dist + np.pi) % (np.pi*2) - np.pi
+        
         euclidean_error = np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist)))
         df.loc[i, 'Euclidean Error'] = euclidean_error
 

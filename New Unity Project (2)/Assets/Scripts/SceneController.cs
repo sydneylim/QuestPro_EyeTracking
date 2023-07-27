@@ -100,7 +100,7 @@ public class SceneController : MonoBehaviour
 
     IEnumerator LoadWorldStabilizedVRScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_HFH5102B_Simple");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_HFH5102B_Simple_Sphere");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

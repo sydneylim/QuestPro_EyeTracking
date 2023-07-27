@@ -31,13 +31,35 @@ public class WorldStabilized_VR : MonoBehaviour
     private bool isReady = false;
     private float pathTime = 5f;
 
-    private int[] nextPos = {
-                    24,19, 0,23,20,
-                    9, 0, 0, 0,21,
-                     0, 0, 0, 0, 0,
-                     3, 0, 0, 0,15,
-                     1, 2, 0, 5, 4};
+    // private int[] nextPos = {
+    //                 24,19, 0,23,20,
+    //                 9, 0, 0, 0,21,
+    //                  0, 0, 0, 0, 0,
+    //                  3, 0, 0, 0,15,
+    //                  1, 2, 0, 5, 4};
 
+    private int[] nextPos = {
+                    39, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 75, 0, 0, 0, 97,
+                    0, 0, 0, 0, 0, 0, 0, 0, 35, 0,
+                    0, 0, 0, 0, 0, 143, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 120, 0,
+                    0, 0, 0, 0, 0, 144, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 111, 0, 48,
+                    10, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 55, 0, 0, 0, 0, 0, 0, 0, 0,
+                    99, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 100,
+                    0, 0, 0, 68, 139, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
     // Start is called before the first frame update
     void Start()
     {
@@ -198,7 +220,7 @@ public class WorldStabilized_VR : MonoBehaviour
 
         isEvaluating = true;
         end = null;
-        filename = "worldStabilizedVR_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "worldStabilizedVRsphere_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
         gazeControllers.GetComponent<CameraController_VR>().AddHeader();
         chooseNewPath();
@@ -211,7 +233,7 @@ public class WorldStabilized_VR : MonoBehaviour
         }
         countdownText.SetActive(false);
 
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 15; i++)
         {
             float timeElapsed = 0.0f;
             while (timeElapsed < pathTime || transform.position != end.position)

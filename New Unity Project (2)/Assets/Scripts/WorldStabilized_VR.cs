@@ -49,7 +49,7 @@ public class WorldStabilized_VR : MonoBehaviour
     {
         countdownText.GetComponent<TextMesh>().text = "World Stabilized";
         countdownText.SetActive(true);
-        StartEvaluation();
+        Evaluation();
     }
 
     void OnDisable()

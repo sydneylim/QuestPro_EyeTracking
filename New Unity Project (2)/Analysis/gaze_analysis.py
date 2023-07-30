@@ -4,13 +4,13 @@ import sys
 import csv
 
 def main():
-    # filenames = ["worldStabilized_20230720145820_walking"]
+    filenames = ["calibration_20230729222249"]
     # filenames = ["calibration_20230629001433", "screenStabilized_20230629001523", "worldStabilized_20230629001800"]
-    filenames = ["calibration_20230720143538", "calibration_20230720143628", "calibration_20230720143715",
-                "screenStabilized_20230720143802", "screenStabilized_20230720143946", "screenStabilized_20230720144124", 
-                "worldStabilized_20230720144329", "worldStabilized_20230720144529", "worldStabilized_20230720144735", 
-                "screenStabilized_20230720144932_walking", "screenStabilized_20230720145112_walking", "screenStabilized_20230720145242_walking", 
-                "worldStabilized_20230720145434_walking", "worldStabilized_20230720145633_walking", "worldStabilized_20230720145820_walking"]
+    # filenames = ["calibration_20230720143538", "calibration_20230720143628", "calibration_20230720143715",
+    #             "screenStabilized_20230720143802", "screenStabilized_20230720143946", "screenStabilized_20230720144124", 
+    #             "worldStabilized_20230720144329", "worldStabilized_20230720144529", "worldStabilized_20230720144735", 
+    #             "screenStabilized_20230720144932_walking", "screenStabilized_20230720145112_walking", "screenStabilized_20230720145242_walking", 
+    #             "worldStabilized_20230720145434_walking", "worldStabilized_20230720145633_walking", "worldStabilized_20230720145820_walking"]
     for filename in filenames:
         print(filename)
         analyze(filename + '.csv', filename + '_error_data.csv')

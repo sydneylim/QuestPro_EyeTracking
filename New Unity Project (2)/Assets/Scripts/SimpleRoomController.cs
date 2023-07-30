@@ -41,11 +41,11 @@ public class SimpleRoomController : MonoBehaviour
         }
         if (Input.GetKeyDown("n"))
         {
-            transform.Rotate(0.0f, -0.1f, 0.0f, Space.World);
+            transform.Rotate(0.0f, -0.5f, 0.0f, Space.World);
         }
         if (Input.GetKeyDown("m"))
         {
-            transform.Rotate(0.0f, 0.1f, 0.0f, Space.World);
+            transform.Rotate(0.0f, 0.5f, 0.0f, Space.World);
         }
         
         if(Input.GetKeyDown("p"))

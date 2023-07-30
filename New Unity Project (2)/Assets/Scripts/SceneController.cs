@@ -27,17 +27,20 @@ public class SceneController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            StartCoroutine(LoadCalibrationVRScene());
+            StartCoroutine(LoadScreenStabilizedWalkingScene());
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            StartCoroutine(LoadScreenStabilizedVRScene());
+            StartCoroutine(LoadWorldStabilizedWalkingScene());
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            StartCoroutine(LoadWorldStabilizedVRScene());
+            StartCoroutine(LoadWorldStabilizedSphereScene());
         }
-        
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            StartCoroutine(LoadWorldStabilizedVRSphereScene());
+        }
         else {
             Debug.Log("invalid scene number");
         }
@@ -76,9 +79,9 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    IEnumerator LoadCalibrationVRScene()
+    IEnumerator LoadScreenStabilizedWalkingScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Calibration_HFH5102B_Simple");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ScreenStabilized_Arrow_Walking");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -87,9 +90,9 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    IEnumerator LoadScreenStabilizedVRScene()
+    IEnumerator LoadWorldStabilizedWalkingScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ScreenStabilized_HFH5102B_Simple");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_Arrow_Walking");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -98,9 +101,20 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    IEnumerator LoadWorldStabilizedVRScene()
+    IEnumerator LoadWorldStabilizedSphereScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_HFH5102B_Simple_Sphere");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_Sphere");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    IEnumerator LoadWorldStabilizedVRSphereScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WorldStabilized_Sphere_VR");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

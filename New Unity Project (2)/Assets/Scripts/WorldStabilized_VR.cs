@@ -38,28 +38,53 @@ public class WorldStabilized_VR : MonoBehaviour
     //                  3, 0, 0, 0,15,
     //                  1, 2, 0, 5, 4};
 
+    // private int[] nextPos = {
+    //                 39, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 75, 0, 0, 0, 97,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 35, 0,
+    //                 0, 0, 0, 0, 0, 143, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 120, 0,
+    //                 0, 0, 0, 0, 0, 144, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 111, 0, 48,
+    //                 10, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 55, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 99, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 100,
+    //                 0, 0, 0, 68, 139, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    // };
+
     private int[] nextPos = {
-                    39, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    27, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 42, 0, 0,
+                    0, 0, 0, 0, 89, 0, 0, 0, 92, 0,
+                    0, 0, 79, 0, 0, 0, 0, 0, 0, 34,
+                    0, 0, 0, 0, 0, 0, 130, 0, 0, 0,
+                    0, 0, 0, 0, 0, 49, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 94,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 142,
+                    0, 0, 162, 0, 38, 0, 0, 82, 0, 0,
+                    65, 0, 0, 0, 0, 0, 0, 0, 0, 56,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 75, 0, 0, 0, 97,
-                    0, 0, 0, 0, 0, 0, 0, 0, 35, 0,
-                    0, 0, 0, 0, 0, 143, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 120, 0,
-                    0, 0, 0, 0, 0, 144, 0, 0, 0, 0,
+                    97, 0, 0, 0, 0, 0, 0, 0, 100, 0,
+                    0, 0, 109, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 111, 0, 48,
-                    10, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 55, 0, 0, 0, 0, 0, 0, 0, 0,
-                    99, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 100,
-                    0, 0, 0, 68, 139, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 177, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 138, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,9 +94,9 @@ public class WorldStabilized_VR : MonoBehaviour
 
     void OnEnable()
     {
-        countdownText.GetComponent<TextMesh>().text = "World Stabilized";
+        countdownText.GetComponent<TextMesh>().text = "World Stabilized_Sphere_VR";
         countdownText.SetActive(true);
-        Evaluation();
+        StartEvaluation();
     }
 
     void OnDisable()
@@ -122,42 +147,42 @@ public class WorldStabilized_VR : MonoBehaviour
         {
             if (currentObject != null)
             {
-                currentObject.transform.position += currentObject.transform.up * 0.05f;
+                currentObject.transform.position += currentObject.transform.up * 0.1f;
             }
         }
         if (Input.GetKeyDown("down") && !isEvaluating)
         {
             if (currentObject != null)
             {
-                currentObject.transform.position -= currentObject.transform.up * 0.05f;
+                currentObject.transform.position -= currentObject.transform.up * 0.1f;
             }
         }
         if (Input.GetKeyDown("left") && !isEvaluating)
         {
             if (currentObject != null)
             {
-                currentObject.transform.position -= currentObject.transform.right * 0.05f;
+                currentObject.transform.position -= currentObject.transform.right * 0.1f;
             }
         }
         if (Input.GetKeyDown("right") && !isEvaluating)
         {
             if (currentObject != null)
             {
-                currentObject.transform.position += currentObject.transform.right * 0.05f;
+                currentObject.transform.position += currentObject.transform.right * 0.1f;
             }
         }
         if (Input.GetKeyDown("w") && !isEvaluating)
         {
             if (currentObject != null)
             {
-                currentObject.transform.position += currentObject.transform.forward * 0.05f;
+                currentObject.transform.position += currentObject.transform.forward * 0.1f;
             }
         }
         if (Input.GetKeyDown("s") && !isEvaluating)
         {
             if (currentObject != null)
             {
-                currentObject.transform.position -= currentObject.transform.forward * 0.05f;
+                currentObject.transform.position -= currentObject.transform.forward * 0.1f;
             }
         }
         if (Input.GetKeyDown("a") && !isEvaluating)
@@ -220,7 +245,7 @@ public class WorldStabilized_VR : MonoBehaviour
 
         isEvaluating = true;
         end = null;
-        filename = "worldStabilizedVRsphere_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "worldStabilized_sphere_VR_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
         gazeControllers.GetComponent<CameraController_VR>().AddHeader();
         chooseNewPath();
@@ -233,7 +258,7 @@ public class WorldStabilized_VR : MonoBehaviour
         }
         countdownText.SetActive(false);
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 20; i++)
         {
             float timeElapsed = 0.0f;
             while (timeElapsed < pathTime || transform.position != end.position)

@@ -18,19 +18,16 @@ EditorBuildSettings:
     path: Assets/Scenes/WorldStabilized_Arrow.unity
     guid: d835b1a5a7969d74291e4e57e23ac110
   - enabled: 1
-    path: Assets/Scenes/Calibration_HFH5102B_Simple.unity
-    guid: 544ce59c1b95211499e211e0d1f776b8
+    path: Assets/Scenes/ScreenStabilized_Arrow_Walking.unity
+    guid: 4ffb421be635eb740abd76e505339cec
   - enabled: 1
-    path: Assets/Scenes/ScreenStabilized_HFH5102B_Simple.unity
-    guid: 24ac588502b2e1f4ea66b779f8660409
-  - enabled: 0
-    path: Assets/Scenes/WorldStabilized_HFH5102B_Simple.unity
-    guid: e8d2b2a910828484d85026c27bf60ea6
-  - enabled: 0
-    path: Assets/Scenes/WorldStabilized_HFH5102B_Simple_Aligned.unity
-    guid: 97d218f03afb5ef47a6940bdeb2131a5
+    path: Assets/Scenes/WorldStabilized_Arrow_Walking.unity
+    guid: 914416a07b0feb24d9c19591acd1cca9
   - enabled: 1
-    path: Assets/Scenes/WorldStabilized_HFH5102B_Simple_Sphere.unity
+    path: Assets/Scenes/WorldStabilized_Sphere.unity
+    guid: 16989e02cbfdde046bbb528f0cdfcc74
+  - enabled: 1
+    path: Assets/Scenes/WorldStabilized_Sphere_VR.unity
     guid: dc666886f5b21604bb795ce17af0c06f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b6629204532376449bf63933d66c3ee7, type: 2}

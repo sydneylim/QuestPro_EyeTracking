@@ -50,7 +50,7 @@ public class WorldStabilized : MonoBehaviour
 
     void OnEnable()
     {
-        countdownText.GetComponent<TextMesh>().text = "World Stabilized";
+        countdownText.GetComponent<TextMesh>().text = "World Stabilized_Body Constrained";
         countdownText.SetActive(true);
         StartEvaluation();
     }
@@ -195,7 +195,7 @@ public class WorldStabilized : MonoBehaviour
 
         isEvaluating = true;
         end = null;
-        filename = "worldStabilized_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "worldStabilized_bodyConstrained_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
         cameraRig.GetComponent<CameraController>().AddHeader();
         chooseNewPath();

@@ -47,7 +47,7 @@ public class ScreenStabilized : MonoBehaviour
 
     void OnEnable()
     {
-        countdownText.GetComponent<TextMesh>().text = "Screen Stabilized";
+        countdownText.GetComponent<TextMesh>().text = "Screen Stabilized_Head Constrained";
         countdownText.SetActive(true);
         StartEvaluation();
     }
@@ -187,7 +187,7 @@ public class ScreenStabilized : MonoBehaviour
     {
         isEvaluating = true;
         end = null;
-        filename = "screenStabilized_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+        filename = "screenStabilized_headConstrained_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
         frameNumber = 0;
         cameraRig.GetComponent<CameraController>().AddHeader();
         chooseNewPath();

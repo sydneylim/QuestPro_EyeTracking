@@ -4,6 +4,8 @@ import sys
 import csv
 
 def main():
+    # filenames = ["calibration_20230720143538"]
+    # filenames = ["worldStabilized_20230720145820_walking"]
     filenames = ["calibration_20230729222249"]
     # filenames = ["calibration_20230629001433", "screenStabilized_20230629001523", "worldStabilized_20230629001800"]
     # filenames = ["calibration_20230720143538", "calibration_20230720143628", "calibration_20230720143715",
@@ -18,10 +20,17 @@ def main():
 
 def analyze(input_csv, output_csv):
     gaze_data = pd.read_csv(input_csv)
-    gaze_data = preprocess(gaze_data)
+    # gaze_data = preprocess(gaze_data)
     gaze_data = calc_gaze_point(gaze_data)
     gaze_data = calc_cosine_error(gaze_data)
     gaze_data = calc_euclidean_error(gaze_data)
+
+    if(input_csv.startswith("calibration_")):
+        calc_spatial_precision_transition(gaze_data)
+        calc_spatial_precision_fixation(gaze_data)
+    
+    if(input_csv.startswith("screenStabilized_")):
+        calc_spatial_precision_pursuit(gaze_data)
 
     gaze_error_data = gaze_data
 
@@ -30,6 +39,8 @@ def analyze(input_csv, output_csv):
 
 def preprocess(df):
     result = df.loc[(df['Movement'] != "start") & (df['Movement'] != "transition")]
+    # result = df.loc[(df['Movement'] != "start")]
+
     result.reset_index(inplace=True, drop=True)
     return result
 
@@ -175,20 +186,23 @@ def calc_cosine_error(df):
 
     
     # df['Cosine Similarity'] = df.apply(lambda row: np.degrees(np.arccos(np.dot(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']]), np.array([row['Expected Visual Angle_x'], row['Expected Visual Angle_y']]))/(np.linalg.norm(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']])) * np.linalg.norm(np.array([row['Expected Visual Angle_x'], df['Expected Visual Angle_y']]))))), axis=1)
-    avg_cosine_similarity = df['Cosine Similarity'].mean()
+    
+    # avg_cosine_similarity = df['Cosine Similarity'].mean()
+
+    avg_cosine_similarity = (df.loc[(df['Movement'] != "start") & (df['Movement'] != "transition")]['Cosine Similarity']).mean()
     print("    cosine similarity:", avg_cosine_similarity)
     return df
 
 def calc_euclidean_error(df):
     for i in range(len(df)):
-        actual_gaze_visual_angle_x = np.arctan2(df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_z'])
-        actual_gaze_visual_angle_y = np.arctan2(df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z'])
+        df.loc[i, 'Actual Gaze Visual Angle_x'] = np.arctan2(df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_z'])
+        df.loc[i, 'Actual Gaze Visual Angle_y'] = np.arctan2(df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z'])
         
-        expected_gaze_visual_angle_x = np.arctan2(df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_z'])
-        expected_gaze_visual_angle_y = np.arctan2(df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z'])
+        df.loc[i, 'Expected Gaze Visual Angle_x'] = np.arctan2(df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_z'])
+        df.loc[i, 'Expected Gaze Visual Angle_y'] = np.arctan2(df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z'])
         
-        x_dist = actual_gaze_visual_angle_x - expected_gaze_visual_angle_x
-        y_dist = actual_gaze_visual_angle_y - expected_gaze_visual_angle_y
+        x_dist = df.loc[i, 'Actual Gaze Visual Angle_x'] - df.loc[i, 'Expected Gaze Visual Angle_x']
+        y_dist = df.loc[i, 'Actual Gaze Visual Angle_y'] - df.loc[i, 'Expected Gaze Visual Angle_y']
         
         x_dist = (x_dist + np.pi) % (np.pi*2) - np.pi
         y_dist = (y_dist + np.pi) % (np.pi*2) - np.pi
@@ -216,10 +230,145 @@ def calc_euclidean_error(df):
 
 
     # df['Euclidean Error'] = df.apply(lambda row: np.sqrt(np.square(row['Gaze Point_x'] - row['Ball Position_x']) + np.square(row['Gaze Point_y'] - row['Ball Position_y']) + np.square(row['Gaze Point_z'] - row['Ball Position_z'])))
+
+    # avg_euclidean_error = df['Euclidean Error'].mean()
     
-    avg_euclidean_error = df['Euclidean Error'].mean()
+    avg_euclidean_error = (df.loc[(df['Movement'] != "start") & (df['Movement'] != "transition")]['Euclidean Error']).mean()    
     print("    euclidean error:", avg_euclidean_error)
     return df
+
+
+def calc_spatial_precision_transition(df):
+    transitions = []
+    rmss = []
+    transition = False
+
+    for i in range(len(df)):
+        if df.loc[i, 'Movement'] == "transition":
+            transition = True
+            actual_gaze = np.array([df.loc[i, 'Actual Gaze Visual Angle_x'], df.loc[i, 'Actual Gaze Visual Angle_y']])  
+            transitions.append(actual_gaze)
+
+        else:
+            if transition == True:
+                transition = False
+                euclidean_distances = []
+                # print("transitions:", transitions)
+                for i in range(1, len(transitions)):
+                    x_dist = transitions[i][0] - transitions[i-1][0]
+                    y_dist = transitions[i][1] - transitions[i-1][1]
+            
+                    # print("dist:", x_dist, y_dist)
+
+                    x_dist = (x_dist + np.pi) % (np.pi*2) - np.pi
+                    y_dist = (y_dist + np.pi) % (np.pi*2) - np.pi
+
+                    # print("adjusted dist:", x_dist, y_dist)
+
+                    euclidean_dist = np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist)))
+                    # print(euclidean_dist)
+                    euclidean_distances.append(euclidean_dist)
+
+                squared_euclidean_distances = [i ** 2 for i in euclidean_distances]
+                # print(squared_euclidean_distances)
+                mean_euclidean_distances = sum(squared_euclidean_distances) / len(squared_euclidean_distances)
+                # print(mean_euclidean_distances)
+                rms = np.sqrt(mean_euclidean_distances)
+                # print(rms)
+                rmss.append(rms)
+                transitions = []
+
+    avg_rms = sum(rmss) / len(rmss)
+    print("    transition spatial precision:", avg_rms)
+
+
+
+def calc_spatial_precision_fixation(df):
+    fixations = []
+    rmss = []
+    fixation = False
+
+    for i in range(len(df)):
+        if df.loc[i, 'Movement'] == "static":
+            fixation = True
+            actual_gaze = np.array([df.loc[i, 'Actual Gaze Visual Angle_x'], df.loc[i, 'Actual Gaze Visual Angle_y']])  
+            fixations.append(actual_gaze)
+
+        else:
+            if fixation == True:
+                fixation = False
+                euclidean_distances = []
+                # print("transitions:", transitions)
+                for i in range(1, len(fixations)):
+                    x_dist = fixations[i][0] - fixations[i-1][0]
+                    y_dist = fixations[i][1] - fixations[i-1][1]
+            
+                    # print("dist:", x_dist, y_dist)
+
+                    x_dist = (x_dist + np.pi) % (np.pi*2) - np.pi
+                    y_dist = (y_dist + np.pi) % (np.pi*2) - np.pi
+
+                    # print("adjusted dist:", x_dist, y_dist)
+
+                    euclidean_dist = np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist)))
+                    # print(euclidean_dist)
+                    euclidean_distances.append(euclidean_dist)
+
+                squared_euclidean_distances = [i ** 2 for i in euclidean_distances]
+                # print(squared_euclidean_distances)
+                mean_euclidean_distances = sum(squared_euclidean_distances) / len(squared_euclidean_distances)
+                # print(mean_euclidean_distances)
+                rms = np.sqrt(mean_euclidean_distances)
+                # print(rms)
+                rmss.append(rms)
+                fixations = []
+
+    avg_rms = sum(rmss) / len(rmss)
+    print("    fixation spatial precision:", avg_rms)
+
+def calc_spatial_precision_pursuit(df):
+    movements = []
+    rmss = []
+    moving = False
+
+    for i in range(len(df)):
+        if df.loc[i, 'Movement'] == "moving":
+            moving = True
+            actual_gaze = np.array([df.loc[i, 'Actual Gaze Visual Angle_x'], df.loc[i, 'Actual Gaze Visual Angle_y']])  
+            movements.append(actual_gaze)
+
+        else:
+            if moving == True:
+                moving = False
+                euclidean_distances = []
+                # print("transitions:", transitions)
+                for i in range(1, len(movements)):
+                    x_dist = movements[i][0] - movements[i-1][0]
+                    y_dist = movements[i][1] - movements[i-1][1]
+            
+                    # print("dist:", x_dist, y_dist)
+
+                    x_dist = (x_dist + np.pi) % (np.pi*2) - np.pi
+                    y_dist = (y_dist + np.pi) % (np.pi*2) - np.pi
+
+                    # print("adjusted dist:", x_dist, y_dist)
+
+                    euclidean_dist = np.degrees(np.sqrt(np.square(x_dist) + np.square(y_dist)))
+                    # print(euclidean_dist)
+                    euclidean_distances.append(euclidean_dist)
+
+                squared_euclidean_distances = [i ** 2 for i in euclidean_distances]
+                # print(squared_euclidean_distances)
+                mean_euclidean_distances = sum(squared_euclidean_distances) / len(squared_euclidean_distances)
+                # print(mean_euclidean_distances)
+                rms = np.sqrt(mean_euclidean_distances)
+                # print(rms)
+                rmss.append(rms)
+                movements = []
+
+    avg_rms = sum(rmss) / len(rmss)
+    print("    pursuit spatial precision:", avg_rms)
+
 
 if __name__ == "__main__":
     main()

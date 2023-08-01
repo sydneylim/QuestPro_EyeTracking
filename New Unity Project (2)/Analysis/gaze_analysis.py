@@ -2,35 +2,45 @@ import pandas as pd
 import numpy as np
 import sys
 import csv
+import os
 
 def main():
-    # filenames = ["calibration_20230720143538"]
-    # filenames = ["worldStabilized_20230720145820_walking"]
-    filenames = ["calibration_20230729222249"]
-    # filenames = ["calibration_20230629001433", "screenStabilized_20230629001523", "worldStabilized_20230629001800"]
-    # filenames = ["calibration_20230720143538", "calibration_20230720143628", "calibration_20230720143715",
-    #             "screenStabilized_20230720143802", "screenStabilized_20230720143946", "screenStabilized_20230720144124", 
-    #             "worldStabilized_20230720144329", "worldStabilized_20230720144529", "worldStabilized_20230720144735", 
-    #             "screenStabilized_20230720144932_walking", "screenStabilized_20230720145112_walking", "screenStabilized_20230720145242_walking", 
-    #             "worldStabilized_20230720145434_walking", "worldStabilized_20230720145633_walking", "worldStabilized_20230720145820_walking"]
-    for filename in filenames:
-        print(filename)
-        analyze(filename + '.csv', filename + '_error_data.csv')
+    # filenames = []
+
+    # for filename in filenames:
+    #     print(filename)
+    #     analyze(filename + '.csv', filename + '_error_data.csv')
+
+    directory = 'tobias_pilot'
+    current_directory = os.getcwd() + "/" + directory
+    final_directory = os.path.join(current_directory, r'error_data/')
+    if not os.path.exists(final_directory):
+        os.makedirs(final_directory)
+
+    for filename in os.scandir(directory):
+        if filename.is_file():
+            print(filename.path)
+            analyze(filename.path, final_directory + filename.name.rsplit('.', 1)[0] + ".csv")
 
 
 def analyze(input_csv, output_csv):
     gaze_data = pd.read_csv(input_csv)
     # gaze_data = preprocess(gaze_data)
     gaze_data = calc_gaze_point(gaze_data)
-    gaze_data = calc_cosine_error(gaze_data)
+
+    if("worldStabilized_sphere_VR_" in input_csv):
+        gaze_data = calc_cosine_error_VR(gaze_data)
+    else:
+        gaze_data = calc_cosine_error(gaze_data)
+
     gaze_data = calc_euclidean_error(gaze_data)
 
-    if(input_csv.startswith("calibration_")):
+    if("calibration_" in input_csv):
         calc_spatial_precision_transition(gaze_data)
         calc_spatial_precision_fixation(gaze_data)
     
-    if(input_csv.startswith("screenStabilized_")):
-        calc_spatial_precision_pursuit(gaze_data)
+    # if("screenStabilized_headConstrained_" in input_csv):
+    #     calc_spatial_precision_pursuit(gaze_data)
 
     gaze_error_data = gaze_data
 
@@ -192,6 +202,77 @@ def calc_cosine_error(df):
     avg_cosine_similarity = (df.loc[(df['Movement'] != "start") & (df['Movement'] != "transition")]['Cosine Similarity']).mean()
     print("    cosine similarity:", avg_cosine_similarity)
     return df
+
+def calc_cosine_error_VR(df):
+    # df['Expected_Left Gaze_x'] = df['Gaze_Left Eye Position_x'] - df['Ball Position_x']
+    # df['Expected_Left Gaze_y'] = df['Gaze_Left Eye Position_y'] - df['Ball Position_y']
+    # df['Expected_Left Gaze_z'] = df['Gaze_Left Eye Position_z'] - df['Ball Position_z']
+
+    # df['Expected_Right Gaze_x'] = df['Gaze_Right Eye Position_x'] - df['Ball Position_x']
+    # df['Expected_Right Gaze_y'] = df['Gaze_Right Eye Position_y'] - df['Ball Position_y']
+    # df['Expected_Right Gaze_z'] = df['Gaze_Right Eye Position_z'] - df['Ball Position_z']
+
+    # df['Left_Expected Visual Angle_x'] = np.arctan2(df['Expected_Left Gaze_x'], df['Expected_Left Gaze_z'])
+    # df['Left_Expected Visual Angle_y'] = np.arctan2(df['Expected_Left Gaze_y'], df['Expected_Left Gaze_z'])
+
+    # df['Right_Expected Visual Angle_x'] = np.arctan2(df['Expected_Right Gaze_x'], df['Expected_Right Gaze_z'])
+    # df['Right_Expected Visual Angle_y'] = np.arctan2(df['Expected_Right Gaze_y'], df['Expected_Right Gaze_z'])
+
+    # df['Left_Gaze Visual Angle_x'] = np.arctan2(df['Gaze_Left Forward Vector_x'], df['Gaze_Left Forward Vector_z'])
+    # df['Left_Gaze Visual Angle_y'] = np.arctan2(df['Gaze_Left Forward Vector_y'], df['Gaze_Left Forward Vector_z'])
+    
+    # df['Right_Gaze Visual Angle_x'] = np.arctan2(df['Gaze_Right Forward Vector_x'], df['Gaze_Right Forward Vector_z'])
+    # df['Right_Gaze Visual Angle_y'] = np.arctan2(df['Gaze_Right Forward Vector_y'], df['Gaze_Right Forward Vector_z'])
+
+    # df['Left_Cosine Similarity'] = np.degrees(np.arccos((np.dot(np.array([df['Left_Gaze Visual Angle_x'], df['Left_Gaze Visual Angle_y']]), np.array([df['Left_Expected Visual Angle_x'], df['Left_Expected Visual Angle_y']])))/(np.linalg.norm(np.array([df['Left_Gaze Visual Angle_x'], df['Left_Gaze Visual Angle_y']])) * np.linalg.norm(np.array([df['Left_Expected Visual Angle_x'], df['Left_Expected Visual Angle_y']])))))
+    # df['Right_Cosine Similarity'] = np.degrees(np.arccos((np.dot(np.array([df['Right_Gaze Visual Angle_x'], df['Right_Gaze Visual Angle_y']]), np.array([df['Right_Expected Visual Angle_x'], df['Right_Expected Visual Angle_y']])))/(np.linalg.norm(np.array([df['Right_Gaze Visual Angle_x'], df['Right_Gaze Visual Angle_y']])) * np.linalg.norm(np.array([df['Right_Expected Visual Angle_x'], df['Right_Expected Visual Angle_y']])))))
+    
+    # df['Avg_Cosine Similarity'] = df[['Left_Cosine Similarity', 'Right_Cosine Similarity']].mean(axis=1) 
+    
+    # construct expected gaze vector: center eye position from camera, and ball
+    df['Expected Gaze_x'] = df['Camera_Position_x'] - df['Ball Position_x']
+    df['Expected Gaze_y'] = df['Camera_Position_y'] - df['Ball Position_y']
+    df['Expected Gaze_z'] = df['Camera_Position_z'] - df['Ball Position_z']
+
+    # construct actual gaze vector: center eye position by averaging eye positions, and gaze point
+    df['Actual Gaze_x'] = df[['Gaze_Left Eye Position_x', 'Gaze_Right Eye Position_x']].mean(axis=1) - df['Gaze Point_x']
+    df['Actual Gaze_y'] = df[['Gaze_Left Eye Position_y', 'Gaze_Right Eye Position_y']].mean(axis=1) - df['Gaze Point_y']
+    df['Actual Gaze_z'] = df[['Gaze_Left Eye Position_z', 'Gaze_Right Eye Position_z']].mean(axis=1) - df['Gaze Point_z']
+
+    # # calc visual angles
+    # df['Expected Visual Angle_x'] = df.apply(lambda row: np.arctan2(row['Expected Gaze_x'], row['Expected Gaze_z']), axis=1)
+    # df['Expected Visual Angle_y'] = df.apply(lambda row: np.arctan2(row['Expected Gaze_y'], row['Expected Gaze_z']), axis=1)
+
+    # df['Actual Visual Angle_x'] = df.apply(lambda row: np.arctan2(row['Actual Gaze_x'], row['Actual Gaze_z']), axis=1)
+    # df['Actual Visual Angle_y'] = df.apply(lambda row: np.arctan2(row['Actual Gaze_y'], row['Actual Gaze_z']), axis=1)
+
+    # calc cosine similarity
+    for i in range(len(df)):
+        # actual_visual_angle = np.array([df.loc[i, 'Actual Visual Angle_x'], df.loc[i, 'Actual Visual Angle_y']])
+        # expected_visual_angle = np.array([df.loc[i, 'Expected Visual Angle_x'], df.loc[i, 'Expected Visual Angle_y']])
+        # actual_dot_expected = np.dot(actual_visual_angle, expected_visual_angle)
+        # actual_visual_angle_norm = np.linalg.norm(actual_visual_angle)
+        # expected_visual_angle_norm = np.linalg.norm(expected_visual_angle)
+        # cosine_similarity = np.degrees(np.arccos(actual_dot_expected / (actual_visual_angle_norm * expected_visual_angle_norm)))   
+        # df.loc[i, 'Cosine Similarity'] = cosine_similarity
+
+        actual_gaze = np.array([df.loc[i, 'Actual Gaze_x'], df.loc[i, 'Actual Gaze_y'], df.loc[i, 'Actual Gaze_z']])
+        expected_gaze = np.array([df.loc[i, 'Expected Gaze_x'], df.loc[i, 'Expected Gaze_y'], df.loc[i, 'Expected Gaze_z']])
+        actual_dot_expected = np.dot(actual_gaze, expected_gaze)
+        actual_gaze_norm = np.linalg.norm(actual_gaze)
+        expected_gaze_norm = np.linalg.norm(expected_gaze)
+        cosine_similarity = np.degrees(np.arccos(actual_dot_expected / (actual_gaze_norm * expected_gaze_norm)))   
+        df.loc[i, 'Cosine Similarity'] = cosine_similarity
+
+    
+    # df['Cosine Similarity'] = df.apply(lambda row: np.degrees(np.arccos(np.dot(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']]), np.array([row['Expected Visual Angle_x'], row['Expected Visual Angle_y']]))/(np.linalg.norm(np.array([row['Actual Visual Angle_x'], row['Actual Visual Angle_y']])) * np.linalg.norm(np.array([row['Expected Visual Angle_x'], df['Expected Visual Angle_y']]))))), axis=1)
+    # avg_cosine_similarity = df['Cosine Similarity'].mean()
+
+    avg_cosine_similarity = (df.loc[(df['Movement'] != "start") & (df['Movement'] != "transition")]['Cosine Similarity']).mean()
+
+    print("    cosine similarity:", avg_cosine_similarity)
+    return df
+
 
 def calc_euclidean_error(df):
     for i in range(len(df)):
@@ -365,7 +446,7 @@ def calc_spatial_precision_pursuit(df):
                 # print(rms)
                 rmss.append(rms)
                 movements = []
-
+    print(rmss)
     avg_rms = sum(rmss) / len(rmss)
     print("    pursuit spatial precision:", avg_rms)
 

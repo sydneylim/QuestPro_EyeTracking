@@ -29,7 +29,7 @@ public class WorldStabilized_VR : MonoBehaviour
     private int frameNumber;
     private bool isEvaluating = false;
     private bool isReady = false;
-    private float pathTime = 5f;
+    private float pathTime = 1.25f;
 
     // private int[] nextPos = {
     //                 24,19, 0,23,20,
@@ -70,7 +70,7 @@ public class WorldStabilized_VR : MonoBehaviour
                     0, 0, 0, 0, 0, 0, 130, 0, 0, 0,
                     0, 0, 0, 0, 0, 49, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 94,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 142,
+                    0, 0, 27, 0, 0, 0, 0, 0, 0, 142,
                     0, 0, 162, 0, 38, 0, 0, 82, 0, 0,
                     65, 0, 0, 0, 0, 0, 0, 0, 0, 56,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -258,7 +258,7 @@ public class WorldStabilized_VR : MonoBehaviour
         }
         countdownText.SetActive(false);
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 80; i++)
         {
             float timeElapsed = 0.0f;
             while (timeElapsed < pathTime || transform.position != end.position)
@@ -268,6 +268,7 @@ public class WorldStabilized_VR : MonoBehaviour
                 timeElapsed += Time.deltaTime;
                 yield return null;
             }
+            movement = "static";
             chooseNewPath();
             yield return new WaitForSeconds(1.5f);
         }

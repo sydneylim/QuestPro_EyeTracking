@@ -218,6 +218,7 @@ public class WorldStabilized_Walking : MonoBehaviour
                 timeElapsed += Time.deltaTime;
                 yield return null;
             }
+            movement = "static";
             chooseNewPath();
             yield return new WaitForSeconds(1.5f);
         }

@@ -11,7 +11,7 @@ def main():
     #     print(filename)
     #     analyze(filename + '.csv', filename + '_error_data.csv')
 
-    directory = 'tobias_pilot'
+    directory = 'p3'
     current_directory = os.getcwd() + "/" + directory
     final_directory = os.path.join(current_directory, r'error_data/')
     if not os.path.exists(final_directory):
@@ -39,8 +39,8 @@ def analyze(input_csv, output_csv):
         calc_spatial_precision_transition(gaze_data)
         calc_spatial_precision_fixation(gaze_data)
     
-    # if("screenStabilized_headConstrained_" in input_csv):
-    #     calc_spatial_precision_pursuit(gaze_data)
+    if("screenStabilized_headConstrained_" in input_csv):
+        calc_spatial_precision_pursuit(gaze_data)
 
     gaze_error_data = gaze_data
 
@@ -330,7 +330,7 @@ def calc_spatial_precision_transition(df):
             actual_gaze = np.array([df.loc[i, 'Actual Gaze Visual Angle_x'], df.loc[i, 'Actual Gaze Visual Angle_y']])  
             transitions.append(actual_gaze)
 
-        else:
+        if (i == len(df) - 1) or df.loc[i, 'Movement'] != "transition":
             if transition == True:
                 transition = False
                 euclidean_distances = []
@@ -375,7 +375,7 @@ def calc_spatial_precision_fixation(df):
             actual_gaze = np.array([df.loc[i, 'Actual Gaze Visual Angle_x'], df.loc[i, 'Actual Gaze Visual Angle_y']])  
             fixations.append(actual_gaze)
 
-        else:
+        if (i == len(df) - 1) or df.loc[i, 'Movement'] != "static":
             if fixation == True:
                 fixation = False
                 euclidean_distances = []
@@ -418,7 +418,7 @@ def calc_spatial_precision_pursuit(df):
             actual_gaze = np.array([df.loc[i, 'Actual Gaze Visual Angle_x'], df.loc[i, 'Actual Gaze Visual Angle_y']])  
             movements.append(actual_gaze)
 
-        else:
+        if (i == len(df) - 1) or df.loc[i, 'Movement'] != "moving":
             if moving == True:
                 moving = False
                 euclidean_distances = []
@@ -446,7 +446,7 @@ def calc_spatial_precision_pursuit(df):
                 # print(rms)
                 rmss.append(rms)
                 movements = []
-    print(rmss)
+
     avg_rms = sum(rmss) / len(rmss)
     print("    pursuit spatial precision:", avg_rms)
 

@@ -5,22 +5,24 @@ import csv
 import os
 
 def main():
-    # filenames = []
+    # filenames = ["calibration_20230803184306"]
 
     # for filename in filenames:
     #     print(filename)
     #     analyze(filename + '.csv', filename + '_error_data.csv')
 
-    directory = 'p4'
-    current_directory = os.getcwd() + "/" + directory
-    final_directory = os.path.join(current_directory, r'error_data/')
-    if not os.path.exists(final_directory):
-        os.makedirs(final_directory)
+    directories = ['p8', 'p9', 'p10', 'p11']
 
-    for filename in os.scandir(directory):
-        if filename.is_file():
-            print(filename.path)
-            analyze(filename.path, final_directory + filename.name.rsplit('.', 1)[0] + ".csv")
+    for directory in directories:
+        current_directory = os.getcwd() + "/" + directory
+        final_directory = os.path.join(current_directory, r'error_data/')
+        if not os.path.exists(final_directory):
+            os.makedirs(final_directory)
+
+        for filename in os.scandir(directory):
+            if filename.is_file():
+                print(filename.path)
+                analyze(filename.path, final_directory + filename.name.rsplit('.', 1)[0] + ".csv")
 
 
 def analyze(input_csv, output_csv):

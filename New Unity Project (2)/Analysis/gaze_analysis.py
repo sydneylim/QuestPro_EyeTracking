@@ -11,7 +11,7 @@ def main():
     #     print(filename)
     #     analyze(filename + '.csv', filename + '_error_data.csv')
 
-    directory = 'p3'
+    directory = 'p4'
     current_directory = os.getcwd() + "/" + directory
     final_directory = os.path.join(current_directory, r'error_data/')
     if not os.path.exists(final_directory):

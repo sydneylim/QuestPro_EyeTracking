@@ -11,7 +11,7 @@ def main():
     #     print(filename)
     #     analyze(filename + '.csv', filename + '_error_data.csv')
 
-    directories = ['p21', 'p24']
+    directories = ['p24', 'p24_missing']
 
     for directory in directories:
         current_directory = os.getcwd() + "/" + directory

@@ -1,0 +1,8 @@
+,Participant,Task,Cosine Error,Euclidean Error,Spatial Precision_Transition,Spatial Precision_Fixation,Spatial Precision_Pursuit
+2023-07-31 11:31:16,p01_incomplete,calibration,1.1494149919714685,1.1921040795892641,3.284725435330952,0.6338692133068526,
+2023-07-31 11:14:31,p01_incomplete,screenStabilized_headConstrained,1.5383777602117814,1.592226595191278,,,0.9721139935723349
+2023-07-31 11:12:12,p01_incomplete,screenStabilized_walking,2.5798019628181557,5.141966293089273,,,
+2023-07-31 11:19:14,p01_incomplete,worldStabilized_bodyConstrained,1.4635576571464004,1.620111159006889,,,
+2023-07-31 11:26:32,p01_incomplete,worldStabilized_sphere,2.3397584894023247,3.216323346039547,,,
+2023-07-31 11:22:09,p01_incomplete,worldStabilized_sphere_VR,2.619815009174138,3.53270396751287,,,
+2023-07-31 11:16:53,p01_incomplete,worldStabilized_walking,3.8354791785277143,6.178906105502451,,,

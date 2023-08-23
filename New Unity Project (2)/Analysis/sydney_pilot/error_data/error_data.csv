@@ -1,0 +1,8 @@
+,Participant,Task,Cosine Error,Euclidean Error,Spatial Precision_Transition,Spatial Precision_Fixation,Spatial Precision_Pursuit
+2023-07-30 20:16:20,sydney_pilot,calibration,2.1477491859591096,2.276674257142184,3.3120764947547454,0.27539654083264337,
+2023-07-30 20:17:09,sydney_pilot,screenStabilized_headConstrained,1.9595547746415423,2.075141844957078,,,0.6957012486432799
+2023-07-30 20:21:10,sydney_pilot,screenStabilized_walking,2.387068533581103,3.905390463976761,,,
+2023-07-30 20:19:00,sydney_pilot,worldStabilized_bodyConstrained,1.963370769934929,2.1516143397736185,,,
+2023-07-30 20:25:38,sydney_pilot,worldStabilized_sphere,1.4679739356734212,2.4001446636848174,,,
+2023-07-30 20:28:21,sydney_pilot,worldStabilized_sphere_VR,2.104999706042187,2.5523191577867026,,,
+2023-07-30 20:22:46,sydney_pilot,worldStabilized_walking,1.9870673052881065,3.3722748812826446,,,
